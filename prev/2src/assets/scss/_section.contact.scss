@@ -1,0 +1,132 @@
+// CONTACT
+
+section.contact {
+  background-color: $color-brand;
+  background: linear-gradient(135deg, $color-brand, darken($color-secondary, 5%));
+  color: $color-inverted;
+  border-bottom: none;
+
+  h2 {
+    margin-bottom: 40px;
+    color: $color-inverted;
+  }
+
+  .row-margin-bottom {
+    margin-bottom: 20px;
+  }
+
+  .container {
+    @media (max-width: $width-medium) {
+      padding: 0 30px;
+    }
+  }
+
+  a,
+  a:link,
+  a:active,
+  a:visited {
+    color: $color-inverted;
+    font-weight: 400;
+
+    &:hover,
+    &:focus {
+      color: lighten($color-secondary, 20%);
+    }
+  }
+
+  label {
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+
+    .input-field,
+    textarea,
+    select {
+      transition: $transition-general;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border: none;
+      background: none;
+      box-shadow: none;
+      outline: none;
+      border-radius: 0;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 30px;
+      letter-spacing: -0.2px;
+      width: 100%;
+      margin-top: 15px;
+      border: 1px solid $color-inverted;
+      color: $color-inverted;
+      padding: 10px 15px;
+
+      &:focus {
+        color: lighten($color-secondary, 10%);
+        border-color: lighten($color-secondary, 10%);
+      }
+
+      &::-webkit-input-placeholder {
+        color: $color-inverted;
+      }
+
+      &::-moz-placeholder {
+        color: $color-inverted;
+      }
+
+      &:-ms-input-placeholder {
+        color: $color-inverted;
+      }
+
+      &:-moz-placeholder {
+        color: $color-inverted;
+      }
+    }
+
+    textarea {
+      height: 90px;
+    }
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .error-message {
+    font-weight: 300;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 18px;
+    letter-spacing: 0.1px;
+    color: $color-inverted;
+    border: 1px solid transparent;
+
+    &.error {
+      padding: 14px 15px;
+      color: $color-error;
+      border-color: $color-error;
+    }
+
+    &.success {
+      padding: 14px 15px;
+      color: $color-success;
+      border-color: $color-success;
+    }
+
+    @media (max-width: $width-medium) {
+      text-align: center;
+
+      &.error {
+        margin-bottom: 30px;
+      }
+
+      &.success {
+        margin-bottom: 30px;
+      }      
+    }    
+  }
+
+  @media (max-width: $width-large) {
+    padding: 40px 0;
+  }
+}

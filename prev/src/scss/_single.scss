@@ -1,0 +1,438 @@
+// SINGLE POST CONTENT
+
+// HEADER
+.entry-header {
+  padding: 168px 0 0 0;
+  margin-bottom: 72px;
+  position: relative;
+  background-color: var(--color-brand);
+  background-position: center bottom 55px;
+  background-repeat: repeat-x;
+  background-size: 624px 84px;
+  background-image: url('./images/bichocanasto-border.svg');
+
+  .entry-title {
+    width: 100%;
+    max-width: $max-width-text;
+    margin: 0 auto;
+    color: #FFFFFF;
+    margin-bottom: 32px;
+
+    @media (max-width: $mediaquery-small) {
+      padding: 0 24px;
+      width: auto;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      padding: 0 24px;
+      width: auto;
+    }
+  }
+
+  .entry-exerpt {
+    width: 100%;
+    max-width: $max-width-text;
+    margin: 0 auto;
+    color: #FFFFFF;
+    margin-bottom: 64px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 32px;
+    letter-spacing: 0;
+    opacity: 0.7;
+
+    @media (max-width: $mediaquery-small) {
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: 32px;
+      padding: 0 24px;
+      width: auto;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      padding: 0 24px;
+      width: auto;
+    }
+  }
+
+  .entry-featured-image {
+    width: $max-width-general;
+    height: 0;
+    max-width: calc(100% - 48px);
+    padding-bottom: calc((100% - 48px) / 2);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: $color-brand;
+    margin: 0 auto;
+    line-height: 0;
+    border-radius: $border-radius-big;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0 0 24px rgba(0,0,0,0.2);
+
+    .attachment-post-thumbnail,
+    .attachment-single-post-cover {
+      width: 100%;
+      height: auto;
+      border-radius: $border-radius-big;
+      overflow: hidden;
+    }
+
+    @media (max-width: $mediaquery-small) {
+      padding-bottom: calc((100% - 48px) / 1.5);
+      margin: 0 24px;
+      width: auto;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      margin: 0 24px;
+      width: auto;
+    }
+
+    @media (min-width: $mediaquery-large + 48px) {
+      padding-bottom: 0;
+      height: 600px;
+    }
+  }
+
+  .entry-featured-image-sticker {
+    width: 180px;
+    height: 180px;
+    display: block;
+    position: absolute;
+
+    &.top {
+      top: -72px;
+      right: 64px;
+    }
+
+    &.bottom {
+      bottom: -56px;
+      left: 32px;
+    }
+
+    img {
+      width: 180px;
+      height: 180px;
+    }
+
+    @media (max-width: $mediaquery-small) {
+      display: none;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      &.top {
+        top: -72px;
+        right: 16px;
+      }
+  
+      &.bottom {
+        bottom: -72px;
+        left: 16px;
+      }
+  
+      img {
+        width: 180px;
+        height: 180px;
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    width: 100%;
+    height: 56px;
+    background-color: $color-background;
+    position: absolute;
+    bottom: 0;
+  }
+
+  @media (max-width: $mediaquery-small) {
+    padding: 88px 0 24px 0;
+    margin-bottom: 0;
+    width: auto;
+  }  
+}
+
+// CONTENT
+.entry-content {
+  margin-bottom: 120px;
+
+  > * {
+    width: 100%;
+    max-width: $max-width-text;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: $mediaquery-small) {
+      padding-left: 24px;
+      padding-right: 24px;
+      width: auto;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      padding-left: 24px;
+      padding-right: 24px;
+      width: auto;
+    }
+  }
+
+  .entry-categories {
+    text-align: center;
+    padding: 0;
+    margin-bottom: 40px;
+
+    .entry-categories-item {
+      display: inline-block;
+      margin: 4px;
+    }
+
+    .entry-categories-link {
+      background: lighten($color-brand, 39%);
+      color: darken($color-brand, 10%);
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      border: none;
+
+      &:hover {
+        background: lighten($color-brand, 43%);
+        text-decoration: none;
+        border: none;
+      }
+    }
+  }
+
+  ul {
+    li {
+      @media (max-width: $mediaquery-small) {
+        margin-left: 16px;
+      }
+
+      @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+        margin-left: 16px;
+      }
+    }
+  }
+
+  h2 {
+    @media (max-width: $mediaquery-small) {
+      font-size: 32px;
+    }
+  }
+
+  h3 {
+    @media (max-width: $mediaquery-small) {
+      font-size: 28px;
+    }
+  }
+
+  .wp-block-pullquote {
+    margin: 40px 0;
+    padding: 64px 0;
+    max-width: none;
+    background-color: var(--color-bc-green);
+
+    blockquote {
+      max-width: $max-width-general;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+  
+    p {
+      font-size: 56px;
+      line-height: 54px;
+      font-family: $font-stack-highlight;
+      letter-spacing: -2.5px;
+      padding: 0 48px;
+      color: white;
+    }
+  
+    cite {
+      font-style: normal;
+      color: white;
+    }
+
+    &:after,
+    &:before {
+      content: '';
+      width: 86px;
+      height: 20px;
+      display: inline-block;
+    }
+
+    &:before {
+      background-image: url('./images/quote-top.svg');
+      background-size: 86px 20px;
+    }
+
+    &:after {
+      background-image: url('./images/quote-bottom.svg');
+      background-size: 86px 20px;
+    }
+
+    @media (max-width: $mediaquery-small) {
+      margin: 20px 0;
+      padding: 20px 0;
+
+      p {
+        font-size: 36px;
+        padding: 0 24px;
+        line-height: 40px;
+      }
+
+      blockquote {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      &:after,
+      &:before {
+        content: '';
+        width: 43px;
+        height: 10px;
+        display: inline-block;
+      }
+  
+      &:before {
+        background-image: url('./images/quote-top.svg');
+        background-size: 43px 10px;
+      }
+  
+      &:after {
+        background-image: url('./images/quote-bottom.svg');
+        background-size: 43px 10px;
+      }
+    }
+  }
+
+  .wp-block-image {
+    max-width: $max-width-general;
+    margin: 56px auto;
+    text-align: center;
+
+    img {
+      height: auto;
+    }
+
+    figcaption {
+      font-size: 16px;
+      font-style: italic;
+      color: var(--color-gray);
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: $mediaquery-small) {
+      margin: 24px auto;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      margin: 24px auto;
+    }
+  }
+  
+  .wp-block-quote { 
+    margin: 40px auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+    border-left: 4px solid var(--color-brand);
+
+    p {
+      margin-bottom: 4px;
+      color: $color-brand;
+    }
+
+    cite {
+      font-size: 16px;
+      color: $color-gray;
+    }
+
+    @media (max-width: $mediaquery-small) {
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+
+    @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-left: 24px;
+      margin-right: 24px;
+    }    
+  }
+
+  @media (max-width: $mediaquery-small) {
+    margin-bottom: 40px;
+  }
+}
+
+// POSTS NAVIGATION
+.post-navigation-wrapper {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  max-width: $max-width-text;
+  margin: 96px auto 96px auto;
+  line-height: 22px;
+
+  .post-navigation-previous {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-right: 12px;
+
+    .post-navigation-link {
+      &:before {
+        content: '\2039\00a0 ANTERIOR';
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        color: $color-gray;
+        text-align: left;
+        display: block;
+      }
+    }
+  }
+
+  .post-navigation-next {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding-left: 12px;
+
+    .post-navigation-link {
+      &:before {
+        content: 'SIGUIENTE\00a0\203A';
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        color: $color-gray;
+        text-align: right;
+        display: block;
+      }
+    }
+  }
+
+  @media (max-width: $mediaquery-small) {
+    padding-left: 24px;
+    padding-right: 24px;
+    margin: 40px auto;
+    width: auto;
+  }
+
+  @media (min-width: $mediaquery-small) and (max-width: $mediaquery-medium + 1) {
+    padding-left: 24px;
+    padding-right: 24px;
+    margin: 40px auto;
+    width: auto;
+  }
+}

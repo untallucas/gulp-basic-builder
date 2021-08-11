@@ -1,0 +1,46 @@
+// HEADER
+
+header {
+  transition: $transition-general;
+  transform: translateY(-100px);
+  padding: 15px 0;
+  background-color: $color-a7-dark;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 11;
+  line-height: 0;
+
+  svg {
+    width: 30px;
+    height: 25px;
+  }
+
+  a,
+  a:link,
+  a:active,
+  a:visited {
+    font-family: $font-montserrat;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 16px;
+    text-decoration: none;
+    vertical-align: bottom;
+    color: #FFFFFF;
+    display: inline-block;
+    
+    i {
+      font-size: 21px;
+      line-height: 16px;
+      vertical-align: bottom;
+      margin-right: 6px;
+    }
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: $color-a7-aqua;
+    }
+  }
+}

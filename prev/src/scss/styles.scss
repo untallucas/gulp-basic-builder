@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+/*
+Theme Name: Bicho Canasto 2021
+Theme URI: https://www.bichocanasto.com/
+Author: Lucas Di Mattia
+Author URI: https://www.untallucas.com/
+Description: Un theme para Bicho Canasto.
+Requires at least: 5.3
+Tested up to: 5.6
+Requires PHP: 5.6
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: bichocanasto2021
+Tags: nice, friendly, awesome
+*/
+
+// VARIABLES
+@import 'vars';
+
+// FONTS IMPORT
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=block');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=block');
+
+// FONTS LOCAL
+@font-face {
+  font-family: 'Sensei';
+  src: url('fonts/sensei-medium-webfont.woff2') format('woff2'),
+       url('fonts/sensei-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// GENERAL
+html,
+body {
+  --color-titles: #{$color-titles};
+  --color-text: #{$color-text};
+  --color-gray: #{$color-gray};
+  --color-background: #{$color-background};
+  --color-brand: #{$color-brand};
+  --color-stress: #{$color-stress};
+  --color-bc-yellow: #{$color-bc-yellow};
+  --color-bc-violet: #{$color-bc-violet};
+  --color-bc-green: #{$color-bc-green};
+  --color-bc-blue: #{$color-bc-blue};
+  --color-bc-orange: #{$color-bc-orange};
+  --color-bc-pink: #{$color-bc-pink};
+  --color-bc-red: #{$color-bc-red};
+
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: $font-stack-text;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: -0.6px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 56px 0 16px;
+  color: var(--color-titles);
+  font-family: $font-stack-titles;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: 50px;
+  letter-spacing: -1.2px;
+  text-align: center;
+  margin-bottom: 32px;
+
+  @media (max-width: $mediaquery-small) {
+    font-size: 38px;
+  }
+}
+
+h2 {
+  font-size: 39px;
+
+  @media (max-width: $mediaquery-small) {
+    font-size: 32px;
+  }
+}
+
+h3 {
+  font-size: 31px;
+
+  @media (max-width: $mediaquery-small) {
+    font-size: 24px;
+  }
+}
+
+h4 {
+  font-size: 25px;
+  
+  @media (max-width: $mediaquery-small) {
+    font-size: 20px;
+  }  
+}
+
+h5 {
+  font-size: 20px;
+
+  @media (max-width: $mediaquery-small) {
+    font-size: 18px;
+  }
+}
+
+h6 {
+  font-family: $font-stack-text;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+a {
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  color: var(--color-brand);
+  border-bottom: 1px solid transparent;
+  font-weight: 600;
+
+  &:hover {
+    color: saturate(darken($color-brand, 10%), 10%);
+    border-bottom: 1px solid saturate(darken($color-brand, 10%), 10%);
+  }
+}
+
+ol,
+ul {
+  padding: 0;
+  margin: 0;
+  padding-left: 40px;
+  margin-bottom: 24px;
+
+  li {
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+small,
+.text_small {
+  font-size: 14px;
+}
+
+// COMPONENTS
+@import 'header', 'footer', 'home', 'page', 'single';

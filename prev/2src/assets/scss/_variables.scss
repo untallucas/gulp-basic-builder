@@ -1,0 +1,27 @@
+// VARIABLES
+
+
+// FONTS
+$font-title: 'Teko', sans-serif;
+$font-text: 'Roboto', sans-serif;
+
+
+// COLORS
+$color-text:        #282828;
+$color-inverted:    #FFFFFF;
+$color-brand:       #282299;
+$color-secondary:   #3F8DFC;
+$color-error:       #FD6BAB;
+$color-success:     #6BFDBD;
+
+
+// TRANSITIONS
+$transition-general: all 0.5s cubic-bezier(0.555, 0.205, 0.295, 0.975);
+
+
+// BREAKPOINTS
+$width-xlarge:  1199px;
+$width-large:    991px;
+$width-medium:   767px;
+$width-small:    479px;
+$width-xsmall:   319px;

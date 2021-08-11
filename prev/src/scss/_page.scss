@@ -1,0 +1,134 @@
+// PAGE CONTENT
+
+.page-header {
+  padding: 168px 0 64px 0;
+  margin-bottom: 56px;
+  position: relative;
+  background-color: var(--color-brand);
+  background-position: center bottom -1px;
+  background-repeat: repeat-x;
+  background-size: 624px 84px;
+  background-image: url('./images/bichocanasto-border.svg');
+
+  .page-title {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    color: white;
+    margin-bottom: 92px;
+  }
+
+  @media (max-width: $mediaquery-small) {
+    padding: 112px 0 16px 0;
+    background-position: right bottom -1px;
+    margin-bottom: 8px;
+  }
+}
+
+// CONTACT
+.contact-form-wrapper {
+  .contact-form-field {
+    margin-bottom: 24px;
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: $color-text;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      font-family: $font-stack-text;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: $border-radius-small;
+      border: 1px solid $color-gray;
+      color: $color-text;
+      box-sizing: border-box;
+
+      &:focus {
+        outline-color: $color-brand;
+      }
+
+      &.wpcf7-not-valid {
+        border-color: red;
+      }
+    }
+
+    textarea {
+      height: 96px;
+    }
+  }
+
+  .contact-form-button {
+    width: 100%;
+
+    input {
+      transition: all 0.2s ease-in-out;
+      background-color: $color-brand;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: $border-radius-small;
+      font-family: $font-stack-text;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &:focus {
+        outline-color: $color-brand;
+      }
+
+      &:hover {
+        color: white;
+        background-color: saturate(darken($color-brand, 10%), 10%);
+      }
+
+      @media (max-width: $mediaquery-small) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.wpcf7 form.failed .wpcf7-response-output,
+.wpcf7 form.aborted .wpcf7-response-output,
+.wpcf7 form.invalid .wpcf7-response-output,
+.wpcf7 form.unaccepted .wpcf7-response-output {
+  border-radius: $border-radius-small;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #F9DDDD;
+  border-color: #F1B2B2;
+  color: #821717;
+  margin-left: 0;
+  margin-right: 0;
+
+  &::before {
+    content: '⛔️';
+    margin-right: 10px;
+  }
+}
+
+.wpcf7 form.sent .wpcf7-response-output {
+  border-radius: $border-radius-small;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #DDF1E4;
+  border-color: #AFDFC0;
+  color: #0F5729;
+  margin-left: 0;
+  margin-right: 0;
+
+  &::before {
+    content: '✅';
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,82 @@
+// PRODUCTS
+
+section.products {
+  h2 {
+    margin-bottom: 40px; 
+
+    @media (max-width: $width-small) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .flex-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+
+    .flex-item {
+      display: flex;
+      margin-bottom: 20px;
+    }
+  }
+
+  .flat-card {
+    background-color: $color-text;
+    width: 100%;
+    padding: 40px 20px;
+    overflow: hidden;
+    border-radius: 6px;
+    position: relative;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    color: $color-inverted;
+
+    &.first {
+      background: darken($color-secondary, 10%);
+      background: linear-gradient(135deg, darken($color-brand, 10%), darken($color-secondary, 15%));
+    }
+
+    &.second {
+      background: darken($color-secondary, 18%);
+      background: linear-gradient(135deg, darken($color-brand, 15%), darken($color-secondary, 23%));
+    }
+
+    &.third {
+      background: darken($color-secondary, 26%);
+      background: linear-gradient(135deg, darken($color-brand, 20%), darken($color-secondary, 31%));
+    }
+
+    &.fourth {
+      background: darken($color-secondary, 34%);
+      background: linear-gradient(135deg, darken($color-brand, 25%), darken($color-secondary, 39%));
+    }
+
+    h3 {
+      color: $color-inverted;
+    }
+
+    svg {
+      width: 114px;
+      height: 114px;
+      display: inline-block;
+      margin-bottom: 30px;
+      background-color: $color-inverted;
+      border-radius: 100px;
+      padding: 10px;
+      box-shadow: 0 3px 7px rgba(0,0,0,0.3), 0 1px 0 rgba(0,0,0,0.2);
+
+      @media (max-width: $width-small) {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 84px;
+        height: 84px;
+      }
+    }
+
+    @media (max-width: $width-small) {
+      text-align: left;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+}

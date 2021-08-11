@@ -1,0 +1,36 @@
+{
+  "name": "sites-builder",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Gulp based routines to quickly build simple optimized websites",
+  "scripts": {
+    "start": "npm install",
+    "code": "gulp default",
+    "build": "gulp default --build",
+    "clean": "gulp clean"
+  },
+  "author": "Lucas Di Mattia",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "browser-sync": "^2.26.12",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-changed": "^3.2.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-file-include": "^2.0.1",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-images-resizer": "0.0.5",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-to-ico": "^1.0.0",
+    "gulp-uglify": "^3.0.1",
+    "minimist": "^1.2.5",
+    "node-sass": "^4.14.1"
+  }
+}
