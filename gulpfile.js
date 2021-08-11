@@ -41,13 +41,13 @@ var gcmq = require('gulp-group-css-media-queries')
 
 
 
-// ENVIRONMENT
+// GET ENVIRONMENT
 var isProduction = flags.production || flags.prod || flags.deploy || flags.dist || flags.build || false
 
-// FOLDER
+// SET WORK FOLDER
 gulp.task('main:clean', function () {
   var targetFolder = isProduction ? paths.dist.base : paths.dev.base
-  return del(targetFolder) // return del(targetFolder, { force:true })
+  return del(targetFolder, { force:true })
 })
 
 // MARKUP
@@ -56,9 +56,9 @@ gulp.task('main:markup', function () {
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
-    .pipe(include({
-      basepath: paths.src.modules
-    }))
+    // .pipe(include({
+    //   basepath: paths.src.modules
+    // }))
     .pipe(gulp.dest(targetFolder))
 })
 
@@ -123,6 +123,7 @@ gulp.task('main:images', function () {
       .pipe(imagemin([
         imagemin.gifsicle({ interlaced: true }),
         imagemin.jpegtran({ progressive: true }),
+        // imagemin.mozjpeg({ progressive: true }), //       imagemin.jpegtran({ progressive: true }),
         imagemin.optipng({ optimizationLevel: 5 }),
         imagemin.svgo({ plugins: [{ removeViewBox: true }, { cleanupIDs: false }] })
       ], {
@@ -163,6 +164,11 @@ gulp.task('main:htaccess', function () {
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
 })
+
+// CREATE FILES ?
+// fs.writeFile(paths.dist.base + '/robots.txt', 'User-agent: *\nAllow: /', done)
+// fs.writeFile( paths.dist.base+'/readme.md', 'contents', done )
+
 
 // FAVICONS
 gulp.task('icons:generate-png', async function () {
