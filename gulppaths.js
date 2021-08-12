@@ -1,13 +1,14 @@
 module.exports = {
   src: {
     base: 'src',
-    markup: 'src',
-    fonts: 'src/assets/fonts',
+    markup: 'src/*.{html,htm,php,md}',
+    htaccess: 'src/.htaccess',
+    scripts: 'src/assets/js/**/*.js',
+    styles: 'src/assets/scss/**/*.scss',
+    fonts: 'src/assets/fonts/**/*',
+    images: 'src/assets/images/**/*.{jpg,png,gif,jpeg,svg}',
+    docs: 'src/assets/docs/**/*.{pdf,xls,xlsx,doc,docx}',
     icons: 'src/assets/icons',
-    images: 'src/assets/images',
-    scripts: 'src/assets/js',
-    styles: 'src/assets/scss',
-    docs: 'src/assets/docs',
     vendor: {
       styles: [
         './node_modules/bootstrap-sass/assets/stylesheets',

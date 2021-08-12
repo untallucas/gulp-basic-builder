@@ -1,7 +1,10 @@
+$background: yellow;
+$color: red;
+
 html,
 body {
-  background-color: lime;
-  color: black;
+  background-color: $background;
+  color: $color;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 40px;
 }

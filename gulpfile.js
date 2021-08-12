@@ -1,8 +1,3 @@
-// EXECUTE
-// npm run code
-// npm run build
-// npm run clean
-
 // VARIABLES
 // var appColor = '#FFFFFF'
 // var appName = 'App Name'
@@ -21,7 +16,6 @@ var sourcemaps = require('gulp-sourcemaps')
 var changed = require('gulp-changed')
 var browserSync = require('browser-sync').create()
 var flags = require('minimist')(process.argv.slice(1))
-var include = require('gulp-file-include')
 
 var imagemin = require('gulp-imagemin')
 var resize = require('gulp-images-resizer')
@@ -36,19 +30,17 @@ var cleanCSS = require('gulp-clean-css')
 var sass = require('gulp-sass')
 sass.compiler = require('node-sass')
 
-var gcmq = require('gulp-group-css-media-queries')
 
-
-
-
-// GET ENVIRONMENT
+// GET ENVIRONMENT FLAG
 var isProduction = flags.production || flags.prod || flags.deploy || flags.dist || flags.build || false
 
-// SET WORK FOLDER
+
+// CLEAN WORK FOLDER
 gulp.task('main:clean', function () {
   var targetFolder = isProduction ? paths.dist.base : paths.dev.base
   return del(targetFolder, { force:true })
 })
+
 
 // MARKUP
 gulp.task('main:markup', function () {
@@ -56,11 +48,9 @@ gulp.task('main:markup', function () {
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
-    // .pipe(include({
-    //   basepath: paths.src.modules
-    // }))
     .pipe(gulp.dest(targetFolder))
 })
+
 
 // STYLES
 gulp.task('main:styles', function () {
@@ -91,6 +81,7 @@ gulp.task('main:styles', function () {
   }
 })
 
+
 // SCRIPTS
 gulp.task('main:scripts', function () {
   if (isProduction) {
@@ -113,6 +104,7 @@ gulp.task('main:scripts', function () {
   }
 })
 
+
 // IMAGES
 gulp.task('main:images', function () {
   if (isProduction) {
@@ -122,10 +114,14 @@ gulp.task('main:images', function () {
       .pipe(changed(paths.dist.images))
       .pipe(imagemin([
         imagemin.gifsicle({ interlaced: true }),
-        imagemin.jpegtran({ progressive: true }),
-        // imagemin.mozjpeg({ progressive: true }), //       imagemin.jpegtran({ progressive: true }),
+        imagemin.mozjpeg({ quality: 75, progressive: true }),
         imagemin.optipng({ optimizationLevel: 5 }),
-        imagemin.svgo({ plugins: [{ removeViewBox: true }, { cleanupIDs: false }] })
+        imagemin.svgo({ 
+          plugins: [
+            { removeViewBox: true },
+            { cleanupIDs: false }
+          ] 
+        })
       ], {
         verbose: true
       }))
@@ -138,6 +134,7 @@ gulp.task('main:images', function () {
   }
 })
 
+
 // FONTS
 gulp.task('main:fonts', function () {
   var targetFolder = isProduction ? paths.dist.fonts : paths.dev.fonts
@@ -146,6 +143,7 @@ gulp.task('main:fonts', function () {
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
 })
+
 
 // DOCS
 gulp.task('main:docs', function () {
@@ -156,6 +154,7 @@ gulp.task('main:docs', function () {
     .pipe(gulp.dest(targetFolder))
 })
 
+
 // HTACCESS
 gulp.task('main:htaccess', function () {
   var targetFolder = isProduction ? paths.dist.base : paths.dev.base
@@ -164,6 +163,7 @@ gulp.task('main:htaccess', function () {
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
 })
+
 
 // CREATE FILES ?
 // fs.writeFile(paths.dist.base + '/robots.txt', 'User-agent: *\nAllow: /', done)
@@ -256,16 +256,19 @@ gulp.task('icons:copy-files', function () {
 
 gulp.task('main:favicons', gulp.series('icons:generate-png', 'icons:generate-plain-png', 'icons:copy-files', 'icons:generate-ico'))
 
-// CLEANUP
-gulp.task('clean', function () {
+
+// RESET
+gulp.task('reset', function () {
   return del([paths.dist.base, paths.dev.base])
 })
+
 
 // RELOAD WEB SERVER
 gulp.task('reload', function (done) {
   browserSync.reload()
   done()
 })
+
 
 // SERVE
 gulp.task('serve', function (done) {
@@ -277,22 +280,23 @@ gulp.task('serve', function (done) {
   done()
 })
 
+
 // WATCH
 gulp.task('watch', function () {
-  gulp.watch([paths.src.markup, paths.src.modules + '**/*.html'], gulp.series('main:markup', 'reload'))
-  gulp.watch([paths.src.styles, paths.src.modules + '**/*.scss'], gulp.series('main:styles', 'reload'))
+  gulp.watch(paths.src.markup, gulp.series('main:markup', 'reload'))
+  gulp.watch(paths.src.styles, gulp.series('main:styles', 'reload'))
   gulp.watch(paths.src.scripts, gulp.series('main:scripts', 'reload'))
   gulp.watch(paths.src.images, gulp.series('main:images', 'reload'))
   gulp.watch(paths.src.fonts, gulp.series('main:fonts', 'reload'))
   gulp.watch(paths.src.docs, gulp.series('main:docs', 'reload'))
-  gulp.watch(paths.src.htaccess, gulp.series('main:htaccess', 'reload'))
 })
 
-// CONSTRUCTOR
-var generator = ''
+
+// CONSTRUCTORS
+var generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess'), 'serve', 'watch')
+
 if (isProduction) {
   generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess', 'main:favicons'))
-} else {
-  generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess'), 'serve', 'watch')
 }
+
 gulp.task('default', generator)
