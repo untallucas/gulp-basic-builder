@@ -300,3 +300,14 @@ if (isProduction) {
 }
 
 gulp.task('default', generator)
+
+
+// TODO
+// - Create files (robots.txt, humans.txt)
+// - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
+// - Create manifest and sort of with new setup
+// - Create and insert social head metatags automagically
+// - Throw console logs when actions are executed
+// - Review how to include vendor/external/extra files in build
+// - Review if images where changed before optimize again
+// - Linter?
