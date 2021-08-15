@@ -35,3 +35,27 @@ DEPENDENCIES
     "slick-carousel": "^1.8.1"
   }
 }
+
+VENDOR SCRIPTS INCLUDE
+    vendor: {
+      styles: [
+        './node_modules/bootstrap-sass/assets/stylesheets',
+        './node_modules/slick-carousel/slick'
+      ],
+      scripts: [
+        './node_modules/jquery/dist/jquery.js',
+        './node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',
+        './node_modules/slick-carousel/slick/slick.js',
+        './node_modules/scrollmonitor/scrollMonitor.js',
+        './node_modules/scrollmonitor-parallax/index.js',
+        './node_modules/jquery.scrollto/jquery.scrollTo.js',
+        './node_modules/gsap/src/uncompressed/TweenMax.js',
+        './node_modules/headroom.js/dist/jQuery.headroom.min.js',
+        './node_modules/headroom.js/dist/headroom.min.js',
+        './node_modules/moment/moment.js'
+      ],
+      static: [
+        './node_modules/bootstrap-sass/assets/fonts/**/*',
+        './node_modules/slick-carousel/slick/fonts/**/*'
+      ]
+    }
