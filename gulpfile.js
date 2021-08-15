@@ -56,7 +56,7 @@ gulp.task('main:markup', function () {
 gulp.task('main:styles', function () {
   if (isProduction) {
     return gulp
-      .src([paths.src.styles, paths.src.modules + '**/*.scss'])
+      .src(paths.src.styles)
       .pipe(plumber())
       .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -70,7 +70,7 @@ gulp.task('main:styles', function () {
       .pipe(gulp.dest(paths.dist.styles))
   } else {
     return gulp
-      .src([paths.src.styles, paths.src.modules + '**/*.scss'])
+      .src(paths.src.styles)
       .pipe(plumber())
       .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
