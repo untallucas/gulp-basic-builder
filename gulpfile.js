@@ -40,7 +40,6 @@ var isProduction =
 
 // PROJECT VARIABLES
 var appName = 'Test App'
-var appTitle = 'Test App'
 var appKeywords = 'test,app,application,TEST,APP,APPLICATION'
 var appDescription = 'This is a test app'
 var appAuthor = 'App Test | hi@apptest.com'
@@ -64,7 +63,6 @@ gulp.task('main:markup', function () {
     .src(paths.src.markup)
     .pipe(plumber())
     .pipe(replace('##appName##', appName))
-    .pipe(replace('##appTitle##', appTitle))
     .pipe(replace('##appKeywords##', appKeywords))
     .pipe(replace('##appDescription##', appDescription))
     .pipe(replace('##appAuthor##', appAuthor))
@@ -226,39 +224,25 @@ gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:humansTxt'
 
 
 // FAVICONS
-gulp.task('icons:generatePng', async function () {
+gulp.task('icons:png', async function () {
   var iconVariants = [
-    { size: 16, filename: 'favicon-16x16' },
-    { size: 32, filename: 'favicon-32x32' },
-    { size: 194, filename: 'favicon-194x194' },
-    { size: 36, filename: 'android-chome-36x36' },
-    { size: 48, filename: 'android-chome-48x48' },
-    { size: 72, filename: 'android-chome-72x72' },
-    { size: 96, filename: 'android-chome-96x96' },
-    { size: 144, filename: 'android-chome-144x144' },
-    { size: 192, filename: 'android-chome-192x192' },
-    { size: 256, filename: 'android-chome-256x256' },
-    { size: 384, filename: 'android-chome-384x384' },
-    { size: 512, filename: 'android-chome-512x512' },
+    { size: 64, filename: 'favicon' },
     { size: 180, filename: 'apple-touch-icon' },
-    { size: 57, filename: 'apple-touch-icon-57x57' },
-    { size: 60, filename: 'apple-touch-icon-60x60' },
-    { size: 72, filename: 'apple-touch-icon-72x72' },
-    { size: 76, filename: 'apple-touch-icon-76x76' },
-    { size: 114, filename: 'apple-touch-icon-114x114' },
-    { size: 120, filename: 'apple-touch-icon-120x120' },
-    { size: 144, filename: 'apple-touch-icon-144x144' },
-    { size: 152, filename: 'apple-touch-icon-152x152' },
-    { size: 180, filename: 'apple-touch-icon-180x180' }
+    { size: 192, filename: 'icon-192' },
+    { size: 512, filename: 'icon-512' }
   ]
   return iconVariants.forEach(function (icons) {
-    gulp.src(paths.src.icons + '/favicon.png')
+    gulp.src(paths.src.icons + 'favicon.png')
       .pipe(resize({
         width: icons.size,
         height: icons.size,
         format: '.png'
       }))
-      .pipe(imagemin())
+      .pipe(imagemin([
+        imagemin.optipng({ optimizationLevel: 5 }),
+      ], {
+        verbose: true
+      }))
       .pipe(rename(function (path) {
         path.dirname = ''
         path.basename = icons.filename
@@ -268,48 +252,40 @@ gulp.task('icons:generatePng', async function () {
   })
 })
 
-gulp.task('icons:generatePlainPng', async function () {
-  var iconVariants = [
-    { size: 70, filename: 'mstile-70x70' },
-    { size: 144, filename: 'mstile-144x144' },
-    { size: 150, filename: 'mstile-150x150' },
-    { size: 310, filename: 'mstile-310x310' }
-  ]
-  return iconVariants.forEach(function (icons) {
-    gulp.src(paths.src.icons + '/favicon-plain.png')
-      .pipe(resize({
-        width: icons.size,
-        height: icons.size,
-        format: '.png'
-      }))
-      .pipe(imagemin())
-      .pipe(rename(function (path) {
-        path.dirname = ''
-        path.basename = icons.filename
-        path.extname = '.png'
-      }))
-      .pipe(gulp.dest(paths.dist.base))
-  })
-})
-
-gulp.task('icons:generateIco', function () {
+gulp.task('icons:ico', function () {
   return gulp
-    .src(paths.src.icons + '/favicon.png')
-    .pipe(ico('favicon.ico', { resize: true, sizes: [16, 24, 32, 64] }))
+    .src(paths.src.icons + 'favicon.png')
+    .pipe(ico('favicon.ico', { resize: true, sizes: [16, 24, 32, 64, 128, 256] }))
     .pipe(gulp.dest(paths.dist.base))
 })
 
-gulp.task('icons:copyFiles', function () {
+gulp.task('icons:svg', function () {
   return gulp
-    .src(paths.src.icons + '/*.{xml,webmanifest}')
+    .src(paths.src.icons + 'favicon.svg')
     .pipe(plumber())
-    .pipe(replace('##appname##', appName))
-    .pipe(replace('##appcolor##', appColor))
-    .pipe(replace('##appdescription##', appDescription))
+    .pipe(imagemin([
+      imagemin.svgo({ 
+        plugins: [
+          { removeViewBox: true },
+          { cleanupIDs: false }
+        ] 
+      })
+    ], {
+      verbose: true
+    }))
     .pipe(gulp.dest(paths.dist.base))
 })
 
-gulp.task('main:favicons', gulp.series('icons:generatePng', 'icons:generatePlainPng', 'icons:copyFiles', 'icons:generateIco'))
+gulp.task('icons:manifest', function () {
+  return gulp
+    .src(paths.src.icons + 'manifest.json')
+    .pipe(plumber())
+    .pipe(replace('##appName##', appName))
+    .pipe(replace('##appColor##', appColor))
+    .pipe(gulp.dest(paths.dist.base))
+})
+
+gulp.task('main:favicons', gulp.series('icons:png', 'icons:ico', 'icons:svg', 'icons:manifest'))
 
 
 // RESET
@@ -421,5 +397,4 @@ gulp.task('default', generator)
 
 // TODO
 // - Create local env files?
-// - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
-// - Create manifest and sort of with new setup
+// - Create nice demo app
