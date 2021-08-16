@@ -1,33 +1,33 @@
 // VARIABLES
-// var appColor = '#FFFFFF'
-// var appName = 'App Name'
-// var appDescription = 'This is a short app description.'
+var appColor = '#FFFFFF'
+var appName = 'App Name'
+var appDescription = 'This is a short app description.'
 
 // MODULES IMPORT
-var gulp = require('gulp')
-var paths = require('./gulppaths')
+const gulp = require('gulp')
+const paths = require('./gulppaths')
 
-var del = require('del')
-var fs = require('fs')
+const del = require('del')
+const fs = require('fs')
 
-var rename = require('gulp-rename')
-var plumber = require('gulp-plumber')
-var sourcemaps = require('gulp-sourcemaps')
-var changed = require('gulp-changed')
-var browserSync = require('browser-sync').create()
-var flags = require('minimist')(process.argv.slice(1))
+const rename = require('gulp-rename')
+const plumber = require('gulp-plumber')
+const sourcemaps = require('gulp-sourcemaps')
+const changed = require('gulp-changed')
+const browserSync = require('browser-sync').create()
+const flags = require('minimist')(process.argv.slice(1))
 
-var imagemin = require('gulp-imagemin')
-var resize = require('gulp-images-resizer')
-var ico = require('gulp-to-ico')
-var replace = require('gulp-replace')
+const imagemin = require('gulp-imagemin')
+const resize = require('gulp-images-resizer')
+const ico = require('gulp-to-ico')
+const replace = require('gulp-replace')
 
-var concat = require('gulp-concat')
-var uglify = require('gulp-uglify')
+const concat = require('gulp-concat')
+const uglify = require('gulp-uglify')
 
-var prefix = require('gulp-autoprefixer')
-var cleanCSS = require('gulp-clean-css')
-var sass = require('gulp-sass')
+const prefix = require('gulp-autoprefixer')
+const cleanCSS = require('gulp-clean-css')
+const sass = require('gulp-sass')
 sass.compiler = require('node-sass')
 
 
@@ -62,9 +62,7 @@ gulp.task('main:styles', function () {
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(concat('styles.css'))
         .pipe(cleanCSS())
-        .pipe(prefix({
-          browsers: ['last 2 versions', 'safari 5', 'ie 9', 'ios 6', 'android 4']
-        }))
+        .pipe(prefix())
         .pipe(rename('styles.min.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.styles))
@@ -167,7 +165,18 @@ gulp.task('main:htaccess', function () {
 
 // CREATE FILES ?
 // fs.writeFile(paths.dist.base + '/robots.txt', 'User-agent: *\nAllow: /', done)
+// fs.writeFileSync('dist/version.txt', 'Version: ' + pkg.version);
 // fs.writeFile( paths.dist.base+'/readme.md', 'contents', done )
+// gulp.src('dist/version.txt').pipe(…) after the .writeFileSync line
+
+gulp.task('main:createFiles', function(){
+  let data = "This is a file containing a collection of books.";
+  fs.writeFile('dist/filename.txt', data, (err) => {
+    if (err){
+      console.log(err);
+    }
+  })
+})
 
 
 // FAVICONS
@@ -296,7 +305,7 @@ gulp.task('watch', function () {
 var generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess'), 'serve', 'watch')
 
 if (isProduction) {
-  generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess', 'main:favicons'))
+  generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess', 'main:favicons', 'main:createFiles'))
 }
 
 gulp.task('default', generator)
