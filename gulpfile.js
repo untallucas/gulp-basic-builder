@@ -250,6 +250,7 @@ gulp.task('main:htaccess', function () {
     })
 })
 
+
 // CREATE FILES
 gulp.task('create:robotsTxt', function () {
   var fileContent = 'User-agent: *\nAllow: /'
@@ -259,11 +260,12 @@ gulp.task('create:robotsTxt', function () {
     .pipe(gulp.dest(paths.dist.base))
 })
 
-gulp.task('create:versionTxt', function () {
-  var fileContent = 'Version: XXX' // pkg.version
+gulp.task('create:humansTxt', function () {
+  var d = new Date();
+  var fileContent = '/* TEAM */\nDeveloper: Lucas Di Mattia\nTwitter: @untallucas\nFrom: Córdoba, Argentina\n\n/* SITE */\nLast update: '+ d +'\nLanguage: English'
   return gulp
     .src(paths.src.scripts)
-    .pipe(file('robots.txt', fileContent))
+    .pipe(file('humans.txt', fileContent))
     .pipe(gulp.dest(paths.dist.base))
 })
 
@@ -275,7 +277,7 @@ gulp.task('create:readmeMd', function () {
     .pipe(gulp.dest(paths.dist.base))
 })
 
-gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:versionTxt', 'create:readmeMd'))
+gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:humansTxt', 'create:readmeMd'))
 
 
 // FAVICONS
@@ -411,8 +413,6 @@ gulp.task('default', generator)
 
 
 // TODO
-// - Set content for created files (robots.txt, humans.txt)
 // - Create local env files?
 // - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
 // - Create manifest and sort of with new setup
-// - Linter?
