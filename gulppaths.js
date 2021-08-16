@@ -7,6 +7,7 @@ module.exports = {
     styles: 'src/assets/scss/**/*.scss',
     fonts: 'src/assets/fonts/**/*.{otf,ttf,svg,eot,woff,woff2}',
     images: 'src/assets/images/**/*.{jpg,png,gif,jpeg,svg}',
+    social: 'src/assets/social/**/*.jpg',
     docs: 'src/assets/docs/**/*.{pdf,xls,xlsx,doc,docx}',
     icons: 'src/assets/icons/**/*.*'
   },

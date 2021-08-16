@@ -1,8 +1,3 @@
-// VARIABLES
-var appColor = '#FFFFFF'
-var appName = 'App Name'
-var appDescription = 'This is a short app description.'
-
 // MODULES IMPORT
 const gulp = require('gulp')
 const paths = require('./gulppaths')
@@ -16,6 +11,8 @@ const sourcemaps = require('gulp-sourcemaps')
 const changed = require('gulp-changed')
 const browserSync = require('browser-sync').create()
 const flags = require('minimist')(process.argv.slice(1))
+const file = require('gulp-file')
+const chalk = require('chalk')
 
 const imagemin = require('gulp-imagemin')
 const resize = require('gulp-images-resizer')
@@ -32,7 +29,25 @@ sass.compiler = require('node-sass')
 
 
 // GET ENVIRONMENT FLAG
-var isProduction = flags.production || flags.prod || flags.deploy || flags.dist || flags.build || false
+var isProduction = 
+  flags.production || 
+  flags.prod || 
+  flags.deploy || 
+  flags.dist || 
+  flags.build || 
+  false
+
+
+// PROJECT VARIABLES
+var appName = 'Test App'
+var appTitle = 'Test App'
+var appKeywords = 'test,app,application,TEST,APP,APPLICATION'
+var appDescription = 'This is a test app'
+var appAuthor = 'App Test | hi@apptest.com'
+var appColor = '#FFCC33'
+var appUrl = 'https://www.apptest.com'
+var appAuthorTwitter = '@apptest'
+var appAnalyticsId = 'G-12345678'
 
 
 // CLEAN WORK FOLDER
@@ -48,7 +63,21 @@ gulp.task('main:markup', function () {
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
+    .pipe(replace('##appName##', appName))
+    .pipe(replace('##appTitle##', appTitle))
+    .pipe(replace('##appKeywords##', appKeywords))
+    .pipe(replace('##appDescription##', appDescription))
+    .pipe(replace('##appAuthor##', appAuthor))
+    .pipe(replace('##appColor##', appColor))
+    .pipe(replace('##appUrl##', appUrl))
+    .pipe(replace('##appAuthorTwitter##', appAuthorTwitter))
+    .pipe(replace('##appAnalyticsId##', appAnalyticsId))
     .pipe(gulp.dest(targetFolder))
+    .on('end', function(){
+      console.log(
+        chalk.green.bold('\n' + '✅ MARKUP DONE!' + '\n')
+      )
+    })
 })
 
 
@@ -66,6 +95,11 @@ gulp.task('main:styles', function () {
         .pipe(rename('styles.min.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.styles))
+      .on('end', function(){
+        console.log(
+          chalk.green.bold('\n' + '✅ STYLES DONE!' + '\n')
+        )
+      })      
   } else {
     return gulp
       .src(paths.src.styles)
@@ -76,6 +110,11 @@ gulp.task('main:styles', function () {
         .pipe(rename('styles.min.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dev.styles))
+      .on('end', function(){
+        console.log(
+          chalk.green.bold('\n' + '✅ STYLES DONE!' + '\n')
+        )
+      })
   }
 })
 
@@ -91,6 +130,11 @@ gulp.task('main:scripts', function () {
         .pipe(concat('scripts.min.js'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.scripts))
+      .on('end', function(){
+        console.log(
+          chalk.green.bold('\n' + '✅ SCRIPTS DONE!' + '\n')
+        )
+      })
   } else {
     return gulp
       .src(paths.src.scripts)
@@ -99,6 +143,11 @@ gulp.task('main:scripts', function () {
         .pipe(concat('scripts.min.js'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dev.scripts))
+      .on('end', function(){
+        console.log(
+          chalk.green.bold('\n' + '✅ SCRIPTS DONE!' + '\n')
+        )
+      })
   }
 })
 
@@ -124,12 +173,36 @@ gulp.task('main:images', function () {
         verbose: true
       }))
       .pipe(gulp.dest(paths.dist.images))
+      .on('end', function(){
+        console.log(
+          chalk.green.bold('\n' + '✅ IMAGES DONE!' + '\n')
+        )
+      })
   } else {
     return gulp
       .src(paths.src.images)
       .pipe(plumber())
       .pipe(gulp.dest(paths.dev.images))
+      .on('end', function(){
+        console.log(
+          chalk.green.bold('\n' + '✅ IMAGES DONE!' + '\n')
+        )
+      })
   }
+})
+
+
+// SOCIAL
+gulp.task('main:social', function () {
+  return gulp
+    .src(paths.src.social)
+    .pipe(plumber())
+    .pipe(gulp.dest(paths.dist.base))
+    .on('end', function(){
+      console.log(
+        chalk.green.bold('\n' + '✅ SOCIAL DONE!' + '\n')
+      )
+    })
 })
 
 
@@ -140,6 +213,11 @@ gulp.task('main:fonts', function () {
     .src(paths.src.fonts)
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
+    .on('end', function(){
+      console.log(
+        chalk.green.bold('\n' + '✅ FONTS DONE!' + '\n')
+      )
+    })
 })
 
 
@@ -150,6 +228,11 @@ gulp.task('main:docs', function () {
     .src(paths.src.docs)
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
+    .on('end', function(){
+      console.log(
+        chalk.green.bold('\n' + '✅ DOCS DONE!' + '\n')
+      )
+    })
 })
 
 
@@ -160,27 +243,43 @@ gulp.task('main:htaccess', function () {
     .src(paths.src.htaccess, { allowEmpty: true })
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
+    .on('end', function(){
+      console.log(
+        chalk.green.bold('\n' + '✅ HTACCESS DONE!' + '\n')
+      )
+    })
 })
 
-
-// CREATE FILES ?
-// fs.writeFile(paths.dist.base + '/robots.txt', 'User-agent: *\nAllow: /', done)
-// fs.writeFileSync('dist/version.txt', 'Version: ' + pkg.version);
-// fs.writeFile( paths.dist.base+'/readme.md', 'contents', done )
-// gulp.src('dist/version.txt').pipe(…) after the .writeFileSync line
-
-gulp.task('main:createFiles', function(){
-  let data = "This is a file containing a collection of books.";
-  fs.writeFile('dist/filename.txt', data, (err) => {
-    if (err){
-      console.log(err);
-    }
-  })
+// CREATE FILES
+gulp.task('create:robotsTxt', function () {
+  var fileContent = 'User-agent: *\nAllow: /'
+  return gulp
+    .src(paths.src.scripts)
+    .pipe(file('robots.txt', fileContent))
+    .pipe(gulp.dest(paths.dist.base))
 })
+
+gulp.task('create:versionTxt', function () {
+  var fileContent = 'Version: XXX' // pkg.version
+  return gulp
+    .src(paths.src.scripts)
+    .pipe(file('robots.txt', fileContent))
+    .pipe(gulp.dest(paths.dist.base))
+})
+
+gulp.task('create:readmeMd', function () {
+  var fileContent = 'Read this'
+  return gulp
+    .src(paths.src.scripts)
+    .pipe(file('readme.md', fileContent))
+    .pipe(gulp.dest(paths.dist.base))
+})
+
+gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:versionTxt', 'create:readmeMd'))
 
 
 // FAVICONS
-gulp.task('icons:generate-png', async function () {
+gulp.task('icons:generatePng', async function () {
   var iconVariants = [
     { size: 16, filename: 'favicon-16x16' },
     { size: 32, filename: 'favicon-32x32' },
@@ -222,7 +321,7 @@ gulp.task('icons:generate-png', async function () {
   })
 })
 
-gulp.task('icons:generate-plain-png', async function () {
+gulp.task('icons:generatePlainPng', async function () {
   var iconVariants = [
     { size: 70, filename: 'mstile-70x70' },
     { size: 144, filename: 'mstile-144x144' },
@@ -246,14 +345,14 @@ gulp.task('icons:generate-plain-png', async function () {
   })
 })
 
-gulp.task('icons:generate-ico', function () {
+gulp.task('icons:generateIco', function () {
   return gulp
     .src(paths.src.icons + '/favicon.png')
     .pipe(ico('favicon.ico', { resize: true, sizes: [16, 24, 32, 64] }))
     .pipe(gulp.dest(paths.dist.base))
 })
 
-gulp.task('icons:copy-files', function () {
+gulp.task('icons:copyFiles', function () {
   return gulp
     .src(paths.src.icons + '/*.{xml,webmanifest}')
     .pipe(plumber())
@@ -263,7 +362,7 @@ gulp.task('icons:copy-files', function () {
     .pipe(gulp.dest(paths.dist.base))
 })
 
-gulp.task('main:favicons', gulp.series('icons:generate-png', 'icons:generate-plain-png', 'icons:copy-files', 'icons:generate-ico'))
+gulp.task('main:favicons', gulp.series('icons:generatePng', 'icons:generatePlainPng', 'icons:copyFiles', 'icons:generateIco'))
 
 
 // RESET
@@ -305,19 +404,15 @@ gulp.task('watch', function () {
 var generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess'), 'serve', 'watch')
 
 if (isProduction) {
-  generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess', 'main:favicons', 'main:createFiles'))
+  generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:social', 'main:fonts', 'main:docs', 'main:htaccess', 'main:favicons', 'main:createFiles'))
 }
 
 gulp.task('default', generator)
 
 
 // TODO
-// - Create files (robots.txt, humans.txt)
+// - Set content for created files (robots.txt, humans.txt)
 // - Create local env files?
 // - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
 // - Create manifest and sort of with new setup
-// - Create and insert social head metatags automagically
-// - Throw console logs when actions are executed
-// - Review how to include vendor/external/extra files in build
-// - Review if images where changed before optimize again
 // - Linter?

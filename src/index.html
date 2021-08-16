@@ -1,11 +1,62 @@
 <!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>This is an HTML file example</title>
-  <link rel="stylesheet" type="text/css" href="./css/styles.min.css" />
-</head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <!-- TITLE -->
+    <title>##appTitle##</title>
+    
+    <!-- META -->
+    <meta name="keywords" content="##appKeywords##" />
+    <meta name="description" content="##appDescription##" />
+    <meta name="author" content="##appAuthor##" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <!-- OPEN GRAPH -->
+    <meta property="og:title" content="##appTitle##" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="##appTitle##" />
+    <meta property="og:url" content="##appUrl##" />
+    <meta property="og:description" content="##appDescription##" />
 
-<body>
-  This is an HTML file example
-</body>
+    <meta property="og:image" itemprop="image" content="##appUrl##/share-facebook.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="2400" />
+    <meta property="og:image:height" content="1260" />
+
+    <meta property="og:image" itemprop="image" content="##appUrl##/share-whatsapp.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1000" />
+    <meta property="og:image:height" content="1000" />
+
+    <!-- TWITTER -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@untallucas" />
+    <meta name="twitter:creator" content="@untallucas" />
+    <meta name="twitter:title" content="##appTitle##" />
+    <meta name="twitter:description" content="##appDescription##" />
+    <meta name="twitter:image" content="##appUrl##/share-twitter.jpg" />
+
+    <!-- ICONS -->
+    <link rel="icon" href="##appUrl##/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" sizes="16x16" href="##appUrl##/favicon.ico" />
+    <link rel="apple-touch-icon" href="##appUrl##/apple-touch-icon.png" />
+    <link rel="manifest" href="##appUrl##/manifest.json" />
+    <meta name="theme-color" content="##appColor##" />
+
+    <!-- ANALYTICS -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=##appAnalyticsId##"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '##appAnalyticsId##');
+    </script>
+
+    <!-- STYLES -->
+    <link rel="stylesheet" type="text/css" href="./css/styles.min.css" />
+  </head>
+  <body>
+    This is an example HTML file
+  </body>
 </html>
