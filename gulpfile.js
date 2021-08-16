@@ -73,11 +73,6 @@ gulp.task('main:markup', function () {
     .pipe(replace('##appAuthorTwitter##', appAuthorTwitter))
     .pipe(replace('##appAnalyticsId##', appAnalyticsId))
     .pipe(gulp.dest(targetFolder))
-    .on('end', function(){
-      console.log(
-        chalk.green.bold('\n' + '✅ MARKUP DONE!' + '\n')
-      )
-    })
 })
 
 
@@ -95,11 +90,6 @@ gulp.task('main:styles', function () {
         .pipe(rename('styles.min.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.styles))
-      .on('end', function(){
-        console.log(
-          chalk.green.bold('\n' + '✅ STYLES DONE!' + '\n')
-        )
-      })      
   } else {
     return gulp
       .src(paths.src.styles)
@@ -110,11 +100,6 @@ gulp.task('main:styles', function () {
         .pipe(rename('styles.min.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dev.styles))
-      .on('end', function(){
-        console.log(
-          chalk.green.bold('\n' + '✅ STYLES DONE!' + '\n')
-        )
-      })
   }
 })
 
@@ -130,11 +115,6 @@ gulp.task('main:scripts', function () {
         .pipe(concat('scripts.min.js'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.scripts))
-      .on('end', function(){
-        console.log(
-          chalk.green.bold('\n' + '✅ SCRIPTS DONE!' + '\n')
-        )
-      })
   } else {
     return gulp
       .src(paths.src.scripts)
@@ -143,11 +123,6 @@ gulp.task('main:scripts', function () {
         .pipe(concat('scripts.min.js'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dev.scripts))
-      .on('end', function(){
-        console.log(
-          chalk.green.bold('\n' + '✅ SCRIPTS DONE!' + '\n')
-        )
-      })
   }
 })
 
@@ -173,21 +148,11 @@ gulp.task('main:images', function () {
         verbose: true
       }))
       .pipe(gulp.dest(paths.dist.images))
-      .on('end', function(){
-        console.log(
-          chalk.green.bold('\n' + '✅ IMAGES DONE!' + '\n')
-        )
-      })
   } else {
     return gulp
       .src(paths.src.images)
       .pipe(plumber())
       .pipe(gulp.dest(paths.dev.images))
-      .on('end', function(){
-        console.log(
-          chalk.green.bold('\n' + '✅ IMAGES DONE!' + '\n')
-        )
-      })
   }
 })
 
@@ -198,11 +163,6 @@ gulp.task('main:social', function () {
     .src(paths.src.social)
     .pipe(plumber())
     .pipe(gulp.dest(paths.dist.base))
-    .on('end', function(){
-      console.log(
-        chalk.green.bold('\n' + '✅ SOCIAL DONE!' + '\n')
-      )
-    })
 })
 
 
@@ -213,11 +173,6 @@ gulp.task('main:fonts', function () {
     .src(paths.src.fonts)
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
-    .on('end', function(){
-      console.log(
-        chalk.green.bold('\n' + '✅ FONTS DONE!' + '\n')
-      )
-    })
 })
 
 
@@ -228,11 +183,6 @@ gulp.task('main:docs', function () {
     .src(paths.src.docs)
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
-    .on('end', function(){
-      console.log(
-        chalk.green.bold('\n' + '✅ DOCS DONE!' + '\n')
-      )
-    })
 })
 
 
@@ -243,11 +193,6 @@ gulp.task('main:htaccess', function () {
     .src(paths.src.htaccess, { allowEmpty: true })
     .pipe(plumber())
     .pipe(gulp.dest(targetFolder))
-    .on('end', function(){
-      console.log(
-        chalk.green.bold('\n' + '✅ HTACCESS DONE!' + '\n')
-      )
-    })
 })
 
 
@@ -380,6 +325,38 @@ gulp.task('reload', function (done) {
 })
 
 
+// SUCCESS REPORT TO CONSOLE
+gulp.task('report', function (done) {
+  console.log(
+    chalk.green.bold(
+      '\n' +
+      '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++' +
+      '\n' + '\n'
+    ) +
+    chalk.gray(
+      '✅ Markup files copied' + '\n' +
+      '✅ Styles minified and optimized' + '\n' +
+      '✅ Scripts compiled and minified' + '\n' +
+      '✅ Images copied and compressed' + '\n' +
+      '✅ Social share assets copied' + '\n' +
+      '✅ Font files copied' + '\n' +
+      '✅ Documents files copied' + '\n' +
+      '✅ Htaccess file created' + '\n' +
+      '✅ Favicons and identity assets created' + '\n' +
+      '✅ Humans, robots and other files created' + '\n'
+    ) +
+    chalk.green.bold(
+      '\n' + '\n' +
+      '✅ SUCCESSFUL BUILD!!!' + '\n' +
+      '\n' +
+      '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++' +
+      '\n'
+    )
+  )
+  done()
+})
+
+
 // SERVE
 gulp.task('serve', function (done) {
   browserSync.init({
@@ -403,10 +380,40 @@ gulp.task('watch', function () {
 
 
 // CONSTRUCTORS
-var generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:fonts', 'main:docs', 'main:htaccess'), 'serve', 'watch')
+var generator = 
+  gulp.series(
+    'main:clean',
+    gulp.parallel(
+      'main:markup',
+      'main:styles',
+      'main:scripts',
+      'main:images',
+      'main:fonts',
+      'main:docs',
+      'main:htaccess'
+    ),
+    'serve',
+    'watch'
+  )
 
 if (isProduction) {
-  generator = gulp.series('main:clean', gulp.parallel('main:markup', 'main:styles', 'main:scripts', 'main:images', 'main:social', 'main:fonts', 'main:docs', 'main:htaccess', 'main:favicons', 'main:createFiles'))
+  generator =
+    gulp.series(
+      'main:clean',
+      gulp.parallel(
+        'main:markup', 
+        'main:styles', 
+        'main:scripts', 
+        'main:images', 
+        'main:social', 
+        'main:fonts', 
+        'main:docs', 
+        'main:htaccess', 
+        'main:favicons', 
+        'main:createFiles'
+      ),
+      'report'
+    )
 }
 
 gulp.task('default', generator)
@@ -414,6 +421,5 @@ gulp.task('default', generator)
 
 // TODO
 // - Create local env files?
-// - Better console log
 // - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
 // - Create manifest and sort of with new setup
