@@ -304,6 +304,7 @@ gulp.task('default', generator)
 
 // TODO
 // - Create files (robots.txt, humans.txt)
+// - Create local env files?
 // - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
 // - Create manifest and sort of with new setup
 // - Create and insert social head metatags automagically

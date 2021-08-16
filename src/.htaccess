@@ -1,7 +1,7 @@
-#turn on url rewriting 
+# TURN ON URL REWRITING
 RewriteEngine on
 
-#remove the need for .php extention
+# REMOVE THE NEED FOR .PHP FILE EXTENTION
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f 
 RewriteRule ^(.*)$ $1.php
