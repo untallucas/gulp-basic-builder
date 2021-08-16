@@ -414,5 +414,6 @@ gulp.task('default', generator)
 
 // TODO
 // - Create local env files?
+// - Better console log
 // - Create favicons files with new setup (SVG) - https://github.com/RealFaviconGenerator/gulp-real-favicon
 // - Create manifest and sort of with new setup
