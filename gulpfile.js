@@ -1,26 +1,39 @@
+// PROJECT VARIABLES
+var appName = 'Test App'
+var appKeywords = 'test,app,application'
+var appDescription = 'This is a test app'
+var appColor = '#FFCC33'
+var appTwitter = '@apptest'
+var appUrl = 'https://www.apptest.com'
+var appLanguage = 'English'
+
+var appAuthor = 'Lucas Di Mattia'
+var appAuthorTwitter = '@untallucas'
+var appAuthorLocation = 'Córdoba, Argentina'
+
+var appAnalyticsId = 'G-12345678'
+
+
 // MODULES IMPORT
 const gulp = require('gulp')
 const paths = require('./gulppaths')
 
 const del = require('del')
-const fs = require('fs')
-
-const rename = require('gulp-rename')
-const plumber = require('gulp-plumber')
-const sourcemaps = require('gulp-sourcemaps')
-const changed = require('gulp-changed')
 const browserSync = require('browser-sync').create()
 const flags = require('minimist')(process.argv.slice(1))
-const file = require('gulp-file')
 const chalk = require('chalk')
+const changed = require('gulp-changed')
+const concat = require('gulp-concat')
+const file = require('gulp-file')
+const plumber = require('gulp-plumber')
+const rename = require('gulp-rename')
+const replace = require('gulp-replace')
+const sourcemaps = require('gulp-sourcemaps')
+const uglify = require('gulp-uglify')
 
 const imagemin = require('gulp-imagemin')
 const resize = require('gulp-images-resizer')
 const ico = require('gulp-to-ico')
-const replace = require('gulp-replace')
-
-const concat = require('gulp-concat')
-const uglify = require('gulp-uglify')
 
 const prefix = require('gulp-autoprefixer')
 const cleanCSS = require('gulp-clean-css')
@@ -38,17 +51,6 @@ var isProduction =
   false
 
 
-// PROJECT VARIABLES
-var appName = 'Test App'
-var appKeywords = 'test,app,application,TEST,APP,APPLICATION'
-var appDescription = 'This is a test app'
-var appAuthor = 'App Test | hi@apptest.com'
-var appColor = '#FFCC33'
-var appUrl = 'https://www.apptest.com'
-var appAuthorTwitter = '@apptest'
-var appAnalyticsId = 'G-12345678'
-
-
 // CLEAN WORK FOLDER
 gulp.task('main:clean', function () {
   var targetFolder = isProduction ? paths.dist.base : paths.dev.base
@@ -63,11 +65,12 @@ gulp.task('main:markup', function () {
     .src(paths.src.markup)
     .pipe(plumber())
     .pipe(replace('##appName##', appName))
-    .pipe(replace('##appKeywords##', appKeywords))
+    .pipe(replace('##appKeywords##', appKeywords + ',' + appKeywords.toUpperCase()))
     .pipe(replace('##appDescription##', appDescription))
-    .pipe(replace('##appAuthor##', appAuthor))
     .pipe(replace('##appColor##', appColor))
+    .pipe(replace('##appTwitter##', appTwitter))
     .pipe(replace('##appUrl##', appUrl))
+    .pipe(replace('##appAuthor##', appAuthor))
     .pipe(replace('##appAuthorTwitter##', appAuthorTwitter))
     .pipe(replace('##appAnalyticsId##', appAnalyticsId))
     .pipe(gulp.dest(targetFolder))
@@ -142,9 +145,7 @@ gulp.task('main:images', function () {
             { cleanupIDs: false }
           ] 
         })
-      ], {
-        verbose: true
-      }))
+      ]))
       .pipe(gulp.dest(paths.dist.images))
   } else {
     return gulp
@@ -204,8 +205,15 @@ gulp.task('create:robotsTxt', function () {
 })
 
 gulp.task('create:humansTxt', function () {
-  var d = new Date();
-  var fileContent = '/* TEAM */\nDeveloper: Lucas Di Mattia\nTwitter: @untallucas\nFrom: Córdoba, Argentina\n\n/* SITE */\nLast update: '+ d +'\nLanguage: English'
+  var currentDate = new Date();
+  var fileContent = 
+    '/* TEAM */' + '\n' +
+    'Developer: ' + appAuthor + '\n' +
+    'Twitter: ' + appAuthorTwitter + '\n' +
+    'From: ' + appAuthorLocation + '\n\n' + 
+    '/* SITE */' + '\n' +
+    'Last update: ' + currentDate + '\n' + 
+    'Language: ' + appLanguage
   return gulp
     .src(paths.src.scripts)
     .pipe(file('humans.txt', fileContent))
@@ -240,9 +248,7 @@ gulp.task('icons:png', async function () {
       }))
       .pipe(imagemin([
         imagemin.optipng({ optimizationLevel: 5 }),
-      ], {
-        verbose: true
-      }))
+      ]))
       .pipe(rename(function (path) {
         path.dirname = ''
         path.basename = icons.filename
@@ -270,9 +276,7 @@ gulp.task('icons:svg', function () {
           { cleanupIDs: false }
         ] 
       })
-    ], {
-      verbose: true
-    }))
+    ]))
     .pipe(gulp.dest(paths.dist.base))
 })
 
@@ -396,5 +400,4 @@ gulp.task('default', generator)
 
 
 // TODO
-// - Create local env files?
 // - Create nice demo app
