@@ -1,3 +1,10 @@
+// TO EXECUTE
+// yarn install
+// yarn start 
+// yarn build
+// yarn reset
+
+
 // PROJECT VARIABLES
 var appName = 'App Test App'
 var appKeywords = 'test,app,application'

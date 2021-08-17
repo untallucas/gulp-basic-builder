@@ -11,7 +11,7 @@
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp.js",
     "start": "gulp default",
-    "build": "gulp build",
+    "build": "gulp default --prod",
     "reset": "gulp reset"
   },
   "dependencies": {
