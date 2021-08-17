@@ -1,10 +1,10 @@
 // PROJECT VARIABLES
-var appName = 'Test App'
+var appName = 'App Test App'
 var appKeywords = 'test,app,application'
-var appDescription = 'This is a test app'
-var appColor = '#FFCC33'
-var appTwitter = '@apptest'
-var appUrl = 'https://www.apptest.com'
+var appDescription = 'This is a test app, just to demonstrate that this builder works fine'
+var appColor = '#333333'
+var appTwitter = '@apptestapp'
+var appUrl = 'https://www.apptestapp.com'
 var appLanguage = 'English'
 
 var appAuthor = 'Lucas Di Mattia'
@@ -161,6 +161,9 @@ gulp.task('main:social', function () {
   return gulp
     .src(paths.src.social)
     .pipe(plumber())
+    .pipe(imagemin([
+      imagemin.mozjpeg({ quality: 75, progressive: true })
+    ]))
     .pipe(gulp.dest(paths.dist.base))
 })
 
@@ -205,7 +208,7 @@ gulp.task('create:robotsTxt', function () {
 })
 
 gulp.task('create:humansTxt', function () {
-  var currentDate = new Date();
+  var currentDate = new Date()
   var fileContent = 
     '/* TEAM */' + '\n' +
     'Developer: ' + appAuthor + '\n' +
@@ -221,7 +224,19 @@ gulp.task('create:humansTxt', function () {
 })
 
 gulp.task('create:readmeMd', function () {
-  var fileContent = 'Read this'
+  var currentDate = new Date()
+  var fileContent = 
+    '# ' + appName + '  ' + '\n' +
+    '## ' + appDescription + '  ' + '\n' +
+    '&nbsp;  ' + '\n' +
+    '### TEAM  ' + '\n' +
+    'Developer: ' + appAuthor + '  ' + '\n' +
+    'Twitter: ' + appAuthorTwitter + '  ' + '\n' +
+    'From: ' + appAuthorLocation + '  ' + '\n' +
+    '&nbsp;  ' + '\n' +
+    '### SITE  ' + '\n' +
+    'Last update: ' + currentDate + '  ' + '\n' +
+    'Language: ' + appLanguage
   return gulp
     .src(paths.src.scripts)
     .pipe(file('readme.md', fileContent))
@@ -397,7 +412,3 @@ if (isProduction) {
 }
 
 gulp.task('default', generator)
-
-
-// TODO
-// - Create nice demo app

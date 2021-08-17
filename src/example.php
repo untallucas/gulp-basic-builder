@@ -1,3 +1,3 @@
 <?php
-  echo 'This is a PHP file example';
+  echo 'This is an example PHP file';
 ?>
