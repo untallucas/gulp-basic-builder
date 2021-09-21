@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp.js",
+    "code": "gulp default",
     "start": "gulp default",
     "build": "gulp default --prod",
     "reset": "gulp reset"
