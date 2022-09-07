@@ -1,6 +1,6 @@
 // TO EXECUTE
 // yarn install
-// yarn start 
+// yarn code
 // yarn build
 // yarn reset
 
