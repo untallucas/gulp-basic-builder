@@ -44,9 +44,7 @@ const ico = require('gulp-to-ico')
 
 const prefix = require('gulp-autoprefixer')
 const cleanCSS = require('gulp-clean-css')
-const sass = require('gulp-sass')
-sass.compiler = require('node-sass')
-
+const sass = require('gulp-sass')(require('sass'))
 
 // GET ENVIRONMENT FLAG
 var isProduction = 
