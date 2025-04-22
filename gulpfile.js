@@ -1,8 +1,9 @@
 // TO EXECUTE
 // yarn install
+// yarn install:clean
 // yarn code
 // yarn build
-// yarn reset
+// yarn restart
 
 
 // PROJECT VARIABLES
@@ -22,44 +23,47 @@ var appAnalyticsId = 'G-12345678'
 
 
 // MODULES IMPORT
-const gulp = require('gulp')
-const paths = require('./gulppaths')
+import gulp from 'gulp'
+import paths from './gulppaths.js'
 
-const del = require('del')
-const browserSync = require('browser-sync').create()
-const flags = require('minimist')(process.argv.slice(1))
-const chalk = require('chalk')
-const changed = require('gulp-changed')
-const concat = require('gulp-concat')
-const file = require('gulp-file')
-const plumber = require('gulp-plumber')
-const rename = require('gulp-rename')
-const replace = require('gulp-replace')
-const sourcemaps = require('gulp-sourcemaps')
-const uglify = require('gulp-uglify')
+import browserSync from 'browser-sync'
+import flags from 'minimist'
+import chalk from 'chalk'
+import changed from 'gulp-changed'
+import concat from 'gulp-concat'
+import file from 'gulp-file'
+import plumber from 'gulp-plumber'
+import rename from 'gulp-rename'
+import replace from 'gulp-replace'
+import uglify from 'gulp-uglify'
+import fs from 'fs'
 
-const imagemin = require('gulp-imagemin')
-const resize = require('gulp-images-resizer')
-const ico = require('gulp-to-ico')
+import through2 from 'through2'
+import path from 'path'
+import sharp from 'sharp'
+import svgo from 'svgo';
+import { promisify } from 'util'
 
-const prefix = require('gulp-autoprefixer')
-const cleanCSS = require('gulp-clean-css')
-const sass = require('gulp-sass')(require('sass'))
+import * as sass from 'sass'
+import gulpSass from 'gulp-sass'
+import prefix from 'gulp-autoprefixer'
+import cleanCSS from 'gulp-clean-css'
+
 
 // GET ENVIRONMENT FLAG
-var isProduction = 
-  flags.production || 
-  flags.prod || 
-  flags.deploy || 
-  flags.dist || 
-  flags.build || 
+var isProduction =
+  flags.production ||
+  flags.prod ||
+  flags.deploy ||
+  flags.dist ||
+  flags.build ||
   false
 
 
 // CLEAN WORK FOLDER
-gulp.task('main:clean', function () {
+gulp.task('main:clean', async function () {
   var targetFolder = isProduction ? paths.dist.base : paths.dev.base
-  return del(targetFolder, { force:true })
+  return fs.promises.rm(targetFolder, { recursive: true, force: true })
 })
 
 
@@ -83,28 +87,26 @@ gulp.task('main:markup', function () {
 
 
 // STYLES
+const compileSass = gulpSass(sass)
+
 gulp.task('main:styles', function () {
   if (isProduction) {
     return gulp
       .src(paths.src.styles)
       .pipe(plumber())
-      .pipe(sourcemaps.init())
-        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(concat('styles.css'))
-        .pipe(cleanCSS())
-        .pipe(prefix())
-        .pipe(rename('styles.min.css'))
-      .pipe(sourcemaps.write('./'))
+      .pipe(compileSass({outputStyle: 'compressed'}).on('error', compileSass.logError))
+      .pipe(concat('styles.css'))
+      .pipe(cleanCSS())
+      .pipe(prefix())
+      .pipe(rename('styles.min.css'))
       .pipe(gulp.dest(paths.dist.styles))
   } else {
     return gulp
       .src(paths.src.styles)
       .pipe(plumber())
-      .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(concat('styles.css'))
-        .pipe(rename('styles.min.css'))
-      .pipe(sourcemaps.write('./'))
+      .pipe(compileSass().on('error', compileSass.logError))
+      .pipe(concat('styles.css'))
+      .pipe(rename('styles.min.css'))
       .pipe(gulp.dest(paths.dev.styles))
   }
 })
@@ -116,18 +118,14 @@ gulp.task('main:scripts', function () {
     return gulp
       .src(paths.src.scripts)
       .pipe(plumber())
-      .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(concat('scripts.min.js'))
-      .pipe(sourcemaps.write('./'))
+      .pipe(uglify())
+      .pipe(concat('scripts.min.js'))
       .pipe(gulp.dest(paths.dist.scripts))
   } else {
     return gulp
       .src(paths.src.scripts)
-      .pipe(sourcemaps.init())
-        .pipe(plumber())
-        .pipe(concat('scripts.min.js'))
-      .pipe(sourcemaps.write('./'))
+      .pipe(plumber())
+      .pipe(concat('scripts.min.js'))
       .pipe(gulp.dest(paths.dev.scripts))
   }
 })
@@ -140,17 +138,46 @@ gulp.task('main:images', function () {
       .src(paths.src.images)
       .pipe(plumber())
       .pipe(changed(paths.dist.images))
-      .pipe(imagemin([
-        imagemin.gifsicle({ interlaced: true }),
-        imagemin.mozjpeg({ quality: 75, progressive: true }),
-        imagemin.optipng({ optimizationLevel: 5 }),
-        imagemin.svgo({ 
-          plugins: [
-            { removeViewBox: true },
-            { cleanupIDs: false }
-          ] 
+      .pipe(
+        through2.obj(async function (file, _, cb) {
+          if (!file.isBuffer()) return cb(null, file)
+
+          const ext = path.extname(file.path).toLowerCase()
+          const transformer = sharp(file.contents)
+
+          try {
+            if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
+              const buffer = await sharp(file.contents)
+                .toFormat('jpeg', { quality: 75, progressive: true })
+                .toBuffer()
+              file.contents = buffer
+              cb(null, file)
+            }
+
+            else if (ext === '.svg') {
+              const result = svgo(file.contents.toString(), {
+                path: file.path,
+                plugins: [
+                  { name: 'removeViewBox', active: true },
+                  { name: 'cleanupIDs', active: false }
+                ]
+              })
+              file.contents = Buffer.from(result.data)
+              cb(null, file)
+            }
+
+            else if (ext === '.gif') {
+              cb(null, file)
+            }
+
+            else {
+              cb(null, file)
+            }
+          } catch (err) {
+            cb(err)
+          }
         })
-      ]))
+      )
       .pipe(gulp.dest(paths.dist.images))
   } else {
     return gulp
@@ -166,9 +193,28 @@ gulp.task('main:social', function () {
   return gulp
     .src(paths.src.social)
     .pipe(plumber())
-    .pipe(imagemin([
-      imagemin.mozjpeg({ quality: 75, progressive: true })
-    ]))
+    .pipe(
+      through2.obj(async function (file, _, cb) {
+        if (!file.isBuffer()) return cb(null, file)
+
+        const ext = path.extname(file.path).toLowerCase()
+        const supported = ['.jpg', '.jpeg', '.png', '.webp']
+        if (!supported.includes(ext)) return cb(null, file)
+
+        try {
+          const buffer = await sharp(file.contents)
+            .jpeg({ quality: 75, progressive: true })
+            .toBuffer()
+
+          file.contents = buffer
+          file.path = file.path.replace(ext, '.jpg')
+          cb(null, file)
+        } catch (err) {
+          cb(err)
+        }
+      })
+    )
+    .pipe(rename({ extname: '.jpg' }))
     .pipe(gulp.dest(paths.dist.base))
 })
 
@@ -206,31 +252,27 @@ gulp.task('main:htaccess', function () {
 // CREATE FILES
 gulp.task('create:robotsTxt', function () {
   var fileContent = 'User-agent: *\nAllow: /'
-  return gulp
-    .src(paths.src.scripts)
-    .pipe(file('robots.txt', fileContent))
+  return file('robots.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.dist.base))
 })
 
 gulp.task('create:humansTxt', function () {
   var currentDate = new Date()
-  var fileContent = 
+  var fileContent =
     '/* TEAM */' + '\n' +
     'Developer: ' + appAuthor + '\n' +
     'Twitter: ' + appAuthorTwitter + '\n' +
-    'From: ' + appAuthorLocation + '\n\n' + 
+    'From: ' + appAuthorLocation + '\n\n' +
     '/* SITE */' + '\n' +
-    'Last update: ' + currentDate + '\n' + 
+    'Last update: ' + currentDate + '\n' +
     'Language: ' + appLanguage
-  return gulp
-    .src(paths.src.scripts)
-    .pipe(file('humans.txt', fileContent))
+  return file('humans.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.dist.base))
 })
 
 gulp.task('create:readmeMd', function () {
   var currentDate = new Date()
-  var fileContent = 
+  var fileContent =
     '# ' + appName + '  ' + '\n' +
     '## ' + appDescription + '  ' + '\n' +
     '&nbsp;  ' + '\n' +
@@ -242,9 +284,7 @@ gulp.task('create:readmeMd', function () {
     '### SITE  ' + '\n' +
     'Last update: ' + currentDate + '  ' + '\n' +
     'Language: ' + appLanguage
-  return gulp
-    .src(paths.src.scripts)
-    .pipe(file('readme.md', fileContent))
+  return file('readme.md', fileContent, { src: true })
     .pipe(gulp.dest(paths.dist.base))
 })
 
@@ -252,51 +292,81 @@ gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:humansTxt'
 
 
 // FAVICONS
+const writeFileAsync = promisify(fs.writeFile)
+
 gulp.task('icons:png', async function () {
-  var iconVariants = [
+  const iconVariants = [
     { size: 64, filename: 'favicon' },
     { size: 180, filename: 'apple-touch-icon' },
     { size: 192, filename: 'icon-192' },
     { size: 512, filename: 'icon-512' }
   ]
-  return iconVariants.forEach(function (icons) {
-    gulp.src(paths.src.icons + 'favicon.png')
-      .pipe(resize({
-        width: icons.size,
-        height: icons.size,
-        format: '.png'
-      }))
-      .pipe(imagemin([
-        imagemin.optipng({ optimizationLevel: 5 }),
-      ]))
-      .pipe(rename(function (path) {
-        path.dirname = ''
-        path.basename = icons.filename
-        path.extname = '.png'
-      }))
-      .pipe(gulp.dest(paths.dist.base))
-  })
+
+  await Promise.all(iconVariants.map(async ({ size, filename }) => {
+    const buffer = await sharp(paths.src.icons + 'favicon.png')
+      .resize(size, size)
+      .png({ compressionLevel: 9 })
+      .toBuffer()
+
+    const outputPath = path.join(paths.dist.base, `${filename}.png`)
+    fs.writeFileSync(outputPath, buffer)
+  }))
 })
 
-gulp.task('icons:ico', function () {
-  return gulp
-    .src(paths.src.icons + 'favicon.png')
-    .pipe(ico('favicon.ico', { resize: true, sizes: [16, 24, 32, 64, 128, 256] }))
-    .pipe(gulp.dest(paths.dist.base))
+gulp.task('icons:ico', async function () {
+  const sizes = [16, 24, 32, 64, 128, 256]
+  const inputPath = path.join(paths.src.icons, 'favicon.png')
+  const outputPath = path.join(paths.dist.base, 'favicon.ico')
+
+  const pngBuffers = await Promise.all(
+    sizes.map(size =>
+      sharp(inputPath)
+        .resize(size, size)
+        .png()
+        .toBuffer()
+    )
+  )
+
+  await sharp({
+    create: {
+      width: sizes[0],
+      height: sizes[0],
+      channels: 4,
+      background: { r: 0, g: 0, b: 0, alpha: 0 }
+    }
+  })
+    .resize(sizes[0], sizes[0])
+    .toFormat('ico')
+    .toBuffer()
+    .then(icoBuffer => {
+      fs.writeFileSync(outputPath, icoBuffer)
+    })
 })
 
 gulp.task('icons:svg', function () {
   return gulp
     .src(paths.src.icons + 'favicon.svg')
     .pipe(plumber())
-    .pipe(imagemin([
-      imagemin.svgo({ 
-        plugins: [
-          { removeViewBox: true },
-          { cleanupIDs: false }
-        ] 
+    .pipe(
+      through2.obj(function (file, _, cb) {
+        if (!file.isBuffer()) return cb(null, file)
+
+        try {
+          const result = svgo(file.contents.toString(), {
+            path: file.path,
+            plugins: [
+              { name: 'removeViewBox', active: true },
+              { name: 'cleanupIDs', active: false }
+            ]
+          })
+
+          file.contents = Buffer.from(result.data)
+          cb(null, file)
+        } catch (err) {
+          cb(err)
+        }
       })
-    ]))
+    )
     .pipe(gulp.dest(paths.dist.base))
 })
 
@@ -312,9 +382,15 @@ gulp.task('icons:manifest', function () {
 gulp.task('main:favicons', gulp.series('icons:png', 'icons:ico', 'icons:svg', 'icons:manifest'))
 
 
-// RESET
-gulp.task('reset', function () {
-  return del([paths.dist.base, paths.dev.base])
+// RESTART
+gulp.task('restart', async function () {
+  const folders = [paths.dist.base, paths.dev.base]
+
+  await Promise.all(
+    folders.map(folder =>
+      fs.promises.rm(folder, { recursive: true, force: true })
+    )
+  )
 })
 
 
@@ -380,7 +456,7 @@ gulp.task('watch', function () {
 
 
 // CONSTRUCTORS
-var generator = 
+var generator =
   gulp.series(
     'main:clean',
     gulp.parallel(
@@ -401,15 +477,15 @@ if (isProduction) {
     gulp.series(
       'main:clean',
       gulp.parallel(
-        'main:markup', 
-        'main:styles', 
-        'main:scripts', 
-        'main:images', 
-        'main:social', 
-        'main:fonts', 
-        'main:docs', 
-        'main:htaccess', 
-        'main:favicons', 
+        'main:markup',
+        'main:styles',
+        'main:scripts',
+        'main:images',
+        'main:social',
+        'main:fonts',
+        'main:docs',
+        'main:htaccess',
+        'main:favicons',
         'main:createFiles'
       ),
       'report'
