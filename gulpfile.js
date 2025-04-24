@@ -6,25 +6,10 @@
 // yarn restart
 
 
-// PROJECT VARIABLES
-var appName = 'App Test App'
-var appKeywords = 'test,app,application'
-var appDescription = 'This is a test app, just to demonstrate that this builder works fine'
-var appColor = '#333333'
-var appTwitter = '@apptestapp'
-var appUrl = 'https://www.apptestapp.com'
-var appLanguage = 'English'
-
-var appAuthor = 'Lucas Di Mattia'
-var appAuthorTwitter = '@untallucas'
-var appAuthorLocation = 'Córdoba, Argentina'
-
-var appAnalyticsId = 'G-12345678'
-
-
 // MODULES IMPORT
 import gulp from 'gulp'
 import paths from './gulppaths.js'
+import config from './appconfig.js'
 
 import browserSync from 'browser-sync'
 import flags from 'minimist'
@@ -73,15 +58,15 @@ gulp.task('main:markup', function () {
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
-    .pipe(replace('##appName##', appName))
-    .pipe(replace('##appKeywords##', appKeywords + ',' + appKeywords.toUpperCase()))
-    .pipe(replace('##appDescription##', appDescription))
-    .pipe(replace('##appColor##', appColor))
-    .pipe(replace('##appTwitter##', appTwitter))
-    .pipe(replace('##appUrl##', appUrl))
-    .pipe(replace('##appAuthor##', appAuthor))
-    .pipe(replace('##appAuthorTwitter##', appAuthorTwitter))
-    .pipe(replace('##appAnalyticsId##', appAnalyticsId))
+    .pipe(replace('##appName##', config.appName))
+    .pipe(replace('##appKeywords##', config.appKeywords + ',' + config.appKeywords.toUpperCase()))
+    .pipe(replace('##appDescription##', config.appDescription))
+    .pipe(replace('##appColor##', config.appColor))
+    .pipe(replace('##appTwitter##', config.appTwitter))
+    .pipe(replace('##appUrl##', config.appUrl))
+    .pipe(replace('##appAuthor##', config.appAuthor))
+    .pipe(replace('##appAuthorTwitter##', config.appAuthorTwitter))
+    .pipe(replace('##appAnalyticsId##', config.appAnalyticsId))
     .pipe(gulp.dest(targetFolder))
 })
 
@@ -260,12 +245,12 @@ gulp.task('create:humansTxt', function () {
   var currentDate = new Date()
   var fileContent =
     '/* TEAM */' + '\n' +
-    'Developer: ' + appAuthor + '\n' +
-    'Twitter: ' + appAuthorTwitter + '\n' +
-    'From: ' + appAuthorLocation + '\n\n' +
+    'Developer: ' + config.appAuthor + '\n' +
+    'Twitter: ' + config.appAuthorTwitter + '\n' +
+    'From: ' + config.appAuthorLocation + '\n\n' +
     '/* SITE */' + '\n' +
     'Last update: ' + currentDate + '\n' +
-    'Language: ' + appLanguage
+    'Language: ' + config.appLanguage
   return file('humans.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.dist.base))
 })
@@ -273,17 +258,17 @@ gulp.task('create:humansTxt', function () {
 gulp.task('create:readmeMd', function () {
   var currentDate = new Date()
   var fileContent =
-    '# ' + appName + '  ' + '\n' +
-    '## ' + appDescription + '  ' + '\n' +
+    '# ' + config.appName + '  ' + '\n' +
+    '## ' + config.appDescription + '  ' + '\n' +
     '&nbsp;  ' + '\n' +
     '### TEAM  ' + '\n' +
-    'Developer: ' + appAuthor + '  ' + '\n' +
-    'Twitter: ' + appAuthorTwitter + '  ' + '\n' +
-    'From: ' + appAuthorLocation + '  ' + '\n' +
+    'Developer: ' + config.appAuthor + '  ' + '\n' +
+    'Twitter: ' + config.appAuthorTwitter + '  ' + '\n' +
+    'From: ' + config.appAuthorLocation + '  ' + '\n' +
     '&nbsp;  ' + '\n' +
     '### SITE  ' + '\n' +
     'Last update: ' + currentDate + '  ' + '\n' +
-    'Language: ' + appLanguage
+    'Language: ' + config.appLanguage
   return file('readme.md', fileContent, { src: true })
     .pipe(gulp.dest(paths.dist.base))
 })
@@ -374,8 +359,8 @@ gulp.task('icons:manifest', function () {
   return gulp
     .src(paths.src.icons + 'manifest.json')
     .pipe(plumber())
-    .pipe(replace('##appName##', appName))
-    .pipe(replace('##appColor##', appColor))
+    .pipe(replace('##appName##', config.appName))
+    .pipe(replace('##appColor##', config.appColor))
     .pipe(gulp.dest(paths.dist.base))
 })
 
