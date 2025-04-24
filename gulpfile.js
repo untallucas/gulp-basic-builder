@@ -23,10 +23,20 @@ import uglify from 'gulp-uglify'
 import fs from 'fs'
 
 import through2 from 'through2'
+import vinylBuffer from 'vinyl-buffer'
+import imagemin from 'imagemin';
+import imageminMozjpeg from 'imagemin-mozjpeg';
+import imageminJpegtran from 'imagemin-jpegtran'
+import imageminWebp from 'imagemin-webp';
+import imageminPngquant from 'imagemin-pngquant';
 import path from 'path'
+import tap from 'gulp-tap'
+import { extname, basename, dirname, join } from 'path'
+
 import sharp from 'sharp'
-import svgo from 'svgo';
+import pngToIco from 'png-to-ico'
 import { promisify } from 'util'
+import { optimize } from 'svgo'
 
 import * as sass from 'sass'
 import gulpSass from 'gulp-sass'
@@ -65,7 +75,7 @@ gulp.task('main:markup', function () {
 
 
 // STYLES
-const compileSass = gulpSass(sass)
+// const compileSass = gulpSass(sass)
 
 gulp.task('main:styles', function () {
   if (isProduction) {
@@ -133,11 +143,11 @@ gulp.task('main:images', function () {
             }
 
             else if (ext === '.svg') {
-              const result = svgo(file.contents.toString(), {
+              const result = optimize(file.contents.toString(), {
                 path: file.path,
                 plugins: [
                   { name: 'removeViewBox', active: true },
-                  { name: 'cleanupIDs', active: false }
+                  { name: 'cleanupIds', active: false }
                 ]
               })
               file.contents = Buffer.from(result.data)
@@ -171,31 +181,15 @@ gulp.task('main:social', function () {
   return gulp
     .src(paths.src.social)
     .pipe(plumber())
-    .pipe(
-      through2.obj(async function (file, _, cb) {
-        if (!file.isBuffer()) return cb(null, file)
-
-        const ext = path.extname(file.path).toLowerCase()
-        const supported = ['.jpg', '.jpeg', '.png', '.webp']
-        if (!supported.includes(ext)) return cb(null, file)
-
-        try {
-          const buffer = await sharp(file.contents)
-            .jpeg({ quality: 75, progressive: true })
-            .toBuffer()
-
-          file.contents = buffer
-          file.path = file.path.replace(ext, '.jpg')
-          cb(null, file)
-        } catch (err) {
-          cb(err)
-        }
-      })
-    )
-    .pipe(rename({ extname: '.jpg' }))
     .pipe(gulp.dest(paths.dist.base))
 })
 
+gulp.task('test:social', function () {
+  return gulp
+    .src('./src/assets/social/**/*.{jpg,jpeg,png}', { allowEmpty: true })
+    .pipe(plumber()) // Maneja errores sin interrumpir el flujo
+    .pipe(gulp.dest('./dist/assets/social/')); // Copia los archivos al destino
+});
 
 // FONTS
 gulp.task('main:fonts', function () {
@@ -270,7 +264,7 @@ gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:humansTxt'
 
 
 // FAVICONS
-const writeFileAsync = promisify(fs.writeFile)
+// const writeFileAsync = promisify(fs.writeFile)
 
 gulp.task('icons:png', async function () {
   const iconVariants = [
@@ -296,7 +290,7 @@ gulp.task('icons:ico', async function () {
   const inputPath = path.join(paths.src.icons, 'favicon.png')
   const outputPath = path.join(paths.dist.base, 'favicon.ico')
 
-  const pngBuffers = await Promise.all(
+  const tmpPngs = await Promise.all(
     sizes.map(size =>
       sharp(inputPath)
         .resize(size, size)
@@ -305,20 +299,8 @@ gulp.task('icons:ico', async function () {
     )
   )
 
-  await sharp({
-    create: {
-      width: sizes[0],
-      height: sizes[0],
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 }
-    }
-  })
-    .resize(sizes[0], sizes[0])
-    .toFormat('ico')
-    .toBuffer()
-    .then(icoBuffer => {
-      fs.writeFileSync(outputPath, icoBuffer)
-    })
+  const icoBuffer = await pngToIco(tmpPngs)
+  fs.writeFileSync(outputPath, icoBuffer)
 })
 
 gulp.task('icons:svg', function () {
@@ -330,14 +312,13 @@ gulp.task('icons:svg', function () {
         if (!file.isBuffer()) return cb(null, file)
 
         try {
-          const result = svgo(file.contents.toString(), {
+          const result = optimize(file.contents.toString(), {
             path: file.path,
             plugins: [
               { name: 'removeViewBox', active: true },
-              { name: 'cleanupIDs', active: false }
+              { name: 'cleanupIds', active: false }
             ]
           })
-
           file.contents = Buffer.from(result.data)
           cb(null, file)
         } catch (err) {
@@ -458,12 +439,12 @@ if (isProduction) {
         'main:markup',
         'main:styles',
         'main:scripts',
-        'main:images',
+        // 'main:images',
         'main:social',
         'main:fonts',
         'main:docs',
         'main:htaccess',
-        'main:favicons',
+        // 'main:favicons',
         'main:createFiles'
       ),
       'report'
