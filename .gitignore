@@ -12,6 +12,7 @@
 /build
 /dist
 /dev
+/public
 
 # MISC
 .DS_Store

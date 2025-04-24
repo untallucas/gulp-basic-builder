@@ -24,14 +24,14 @@ const paths = {
   },
 
   dist: {
-    base: 'public',
-    markup: 'public',
-    scripts: 'public/js',
-    styles: 'public/css',
-    fonts: 'public/fonts',
-    images: 'public/images',
-    docs: 'public/docs',
-    icons: 'public'
+    base: 'dist',
+    markup: 'dist',
+    scripts: 'dist/js',
+    styles: 'dist/css',
+    fonts: 'dist/fonts',
+    images: 'dist/images',
+    docs: 'dist/docs',
+    icons: 'dist'
   }
 }
 

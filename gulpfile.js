@@ -12,7 +12,6 @@ import paths from './gulppaths.js'
 import config from './appconfig.js'
 
 import browserSync from 'browser-sync'
-import flags from 'minimist'
 import chalk from 'chalk'
 import changed from 'gulp-changed'
 import concat from 'gulp-concat'
@@ -36,13 +35,7 @@ import cleanCSS from 'gulp-clean-css'
 
 
 // GET ENVIRONMENT FLAG
-var isProduction =
-  flags.production ||
-  flags.prod ||
-  flags.deploy ||
-  flags.dist ||
-  flags.build ||
-  false
+const isProduction = process.env.NODE_ENV === 'production';
 
 
 // CLEAN WORK FOLDER
