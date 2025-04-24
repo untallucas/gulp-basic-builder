@@ -16,6 +16,6 @@ try {
     env
   });
 } catch (err) {
-  console.error('❌ Error durante el setup:', err.message);
+  console.error('❌ Error during sharp library setup: ', err.message);
   process.exit(1);
 }
