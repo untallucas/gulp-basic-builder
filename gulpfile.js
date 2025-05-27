@@ -13,7 +13,6 @@ import config from './appconfig.js'
 
 import browserSync from 'browser-sync'
 import chalk from 'chalk'
-import changed from 'gulp-changed'
 import concat from 'gulp-concat'
 import file from 'gulp-file'
 import plumber from 'gulp-plumber'
@@ -21,21 +20,18 @@ import rename from 'gulp-rename'
 import replace from 'gulp-replace'
 import uglify from 'gulp-uglify'
 import fs from 'fs'
+import { promises as fsPromises } from 'fs'
 
+import imagemin from 'imagemin'
+import pngquant from 'imagemin-pngquant'
+import mozjpeg from 'imagemin-mozjpeg'
+import gifsicle from 'imagemin-gifsicle'
+import svgo from 'imagemin-svgo'
 import through2 from 'through2'
-import vinylBuffer from 'vinyl-buffer'
-import imagemin from 'imagemin';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminJpegtran from 'imagemin-jpegtran'
-import imageminWebp from 'imagemin-webp';
-import imageminPngquant from 'imagemin-pngquant';
 import path from 'path'
-import tap from 'gulp-tap'
-import { extname, basename, dirname, join } from 'path'
 
 import sharp from 'sharp'
 import pngToIco from 'png-to-ico'
-import { promisify } from 'util'
 import { optimize } from 'svgo'
 
 import * as sass from 'sass'
@@ -75,7 +71,7 @@ gulp.task('main:markup', function () {
 
 
 // STYLES
-// const compileSass = gulpSass(sass)
+const compileSass = gulpSass(sass)
 
 gulp.task('main:styles', function () {
   if (isProduction) {
@@ -120,58 +116,57 @@ gulp.task('main:scripts', function () {
 
 
 // IMAGES
+async function copyImages(srcDir, destDir) {
+  const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
+
+  await fsPromises.mkdir(destDir, { recursive: true })
+
+  for (const entry of entries) {
+    const srcPath = path.join(srcDir, entry.name)
+    const destPath = path.join(destDir, entry.name)
+
+    if (entry.isDirectory()) {
+      await copyImages(srcPath, destPath)
+    } else {
+      await fsPromises.copyFile(srcPath, destPath)
+    }
+  }
+}
+
+async function optimizeAndCopyImages(srcDir, destDir) {
+  const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
+  await fsPromises.mkdir(destDir, { recursive: true })
+
+  for (const entry of entries) {
+    const srcPath = path.join(srcDir, entry.name)
+    const destPath = path.join(destDir, entry.name)
+
+    if (entry.isDirectory()) {
+      await optimizeAndCopyImages(srcPath, destPath)
+    } else {
+      const buffer = await fsPromises.readFile(srcPath)
+      const optimized = await imagemin.buffer(buffer, {
+        plugins: [
+          mozjpeg(),
+          pngquant(),
+          gifsicle(),
+          svgo(),
+        ],
+      })
+      await fsPromises.writeFile(destPath, optimized)
+    }
+  }
+}
+
 gulp.task('main:images', function () {
+  const srcImages = paths.src.images.replace(/\/\*\*\/\*\.\{.*\}$/, '')
+
   if (isProduction) {
-    return gulp
-      .src(paths.src.images)
-      .pipe(plumber())
-      .pipe(changed(paths.dist.images))
-      .pipe(
-        through2.obj(async function (file, _, cb) {
-          if (!file.isBuffer()) return cb(null, file)
-
-          const ext = path.extname(file.path).toLowerCase()
-          const transformer = sharp(file.contents)
-
-          try {
-            if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
-              const buffer = await sharp(file.contents)
-                .toFormat('jpeg', { quality: 75, progressive: true })
-                .toBuffer()
-              file.contents = buffer
-              cb(null, file)
-            }
-
-            else if (ext === '.svg') {
-              const result = optimize(file.contents.toString(), {
-                path: file.path,
-                plugins: [
-                  { name: 'removeViewBox', active: true },
-                  { name: 'cleanupIds', active: false }
-                ]
-              })
-              file.contents = Buffer.from(result.data)
-              cb(null, file)
-            }
-
-            else if (ext === '.gif') {
-              cb(null, file)
-            }
-
-            else {
-              cb(null, file)
-            }
-          } catch (err) {
-            cb(err)
-          }
-        })
-      )
-      .pipe(gulp.dest(paths.dist.images))
+    const targetFolder = paths.dist.images
+    return optimizeAndCopyImages(srcImages, targetFolder)
   } else {
-    return gulp
-      .src(paths.src.images)
-      .pipe(plumber())
-      .pipe(gulp.dest(paths.dev.images))
+    const targetFolder = paths.dev.images
+    return copyImages(srcImages, targetFolder)
   }
 })
 
@@ -439,8 +434,8 @@ if (isProduction) {
         'main:markup',
         'main:styles',
         'main:scripts',
-        // 'main:images',
-        'main:social',
+        'main:images',
+        // 'main:social',
         'main:fonts',
         'main:docs',
         'main:htaccess',
