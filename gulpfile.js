@@ -18,7 +18,7 @@ import file from 'gulp-file'
 import plumber from 'gulp-plumber'
 import rename from 'gulp-rename'
 import replace from 'gulp-replace'
-import uglify from 'gulp-uglify'
+import terser from 'gulp-terser'
 import fs from 'fs'
 import { promises as fsPromises } from 'fs'
 
@@ -36,8 +36,9 @@ import { optimize } from 'svgo'
 
 import * as sass from 'sass'
 import gulpSass from 'gulp-sass'
-import prefix from 'gulp-autoprefixer'
-import cleanCSS from 'gulp-clean-css'
+import postcss from 'gulp-postcss'
+import autoprefixer from 'autoprefixer'
+import cssnano from 'cssnano'
 
 
 // GET ENVIRONMENT FLAG
@@ -80,8 +81,10 @@ gulp.task('main:styles', function () {
       .pipe(plumber())
       .pipe(compileSass({outputStyle: 'compressed'}).on('error', compileSass.logError))
       .pipe(concat('styles.css'))
-      .pipe(cleanCSS())
-      .pipe(prefix())
+      .pipe(postcss([
+        autoprefixer(),
+        cssnano()
+      ]))
       .pipe(rename('styles.min.css'))
       .pipe(gulp.dest(paths.dist.styles))
   } else {
@@ -102,7 +105,7 @@ gulp.task('main:scripts', function () {
     return gulp
       .src(paths.src.scripts)
       .pipe(plumber())
-      .pipe(uglify())
+      .pipe(terser())
       .pipe(concat('scripts.min.js'))
       .pipe(gulp.dest(paths.dist.scripts))
   } else {
