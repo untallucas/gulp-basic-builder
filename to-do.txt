@@ -1,0 +1,21 @@
+- Tasks separadas x archivos
+- ENV VARS en lugar de JSON / Levantar variables de entorno y disponibilizarlas para usar en JS y CSS
+- Readme completo
+- Mejorar gitignore
+- Scripts
+  - install
+  - start
+  - dev / code
+  - build / prod
+  - clean
+  - reset
+  - restart
+- Como funciona con multiples HTMLs y rutas?
+- Create file para el htaccess
+- Comentar y verificar el gulpfile
+- Ver que esta haciendo con los favicons > Ver lib de 11ty > El manifest x afuera / Revisar q los favicons se esten generando bien con fondo y crops
+- Informar x consola lo que va pasando > ver 11ty
+- Ver como funciona el poder reemplazar valores x variables seteadas en el entorno global / Tener templates/componentes HTML reutilizables dentro de otros archivos / Ver untallucas
+- Folders de components y layouts?
+- Agregar los tokens de CSS builder / Separar tokens en core y semantic
+- Armar assets del producto > Favicon, Social, etc.
