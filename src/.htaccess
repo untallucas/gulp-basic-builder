@@ -1,7 +1,0 @@
-# TURN ON URL REWRITING
-RewriteEngine on
-
-# REMOVE THE NEED FOR .PHP FILE EXTENTION
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f 
-RewriteRule ^(.*)$ $1.php

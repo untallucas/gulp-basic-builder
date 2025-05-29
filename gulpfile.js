@@ -42,7 +42,7 @@ import cssnano from 'cssnano'
 
 
 // GET ENVIRONMENT FLAG
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 
 // CLEAN WORK FOLDER
@@ -185,9 +185,10 @@ gulp.task('main:social', function () {
 gulp.task('test:social', function () {
   return gulp
     .src('./src/assets/social/**/*.{jpg,jpeg,png}', { allowEmpty: true })
-    .pipe(plumber()) // Maneja errores sin interrumpir el flujo
-    .pipe(gulp.dest('./dist/assets/social/')); // Copia los archivos al destino
-});
+    .pipe(plumber())
+    .pipe(gulp.dest('./dist/assets/social/'))
+})
+
 
 // FONTS
 gulp.task('main:fonts', function () {
@@ -212,10 +213,17 @@ gulp.task('main:docs', function () {
 // HTACCESS
 gulp.task('main:htaccess', function () {
   var targetFolder = isProduction ? paths.dist.base : paths.dev.base
-  return gulp
-    .src(paths.src.htaccess, { allowEmpty: true })
-    .pipe(plumber())
-    .pipe(gulp.dest(targetFolder))
+  var fileContent =
+    '# TURN ON URL REWRITING\n' +
+    'RewriteEngine On\n' +
+    '\n' +
+    '# REMOVE THE NEED FOR .PHP FILE EXTENTION\n' +
+    'RewriteCond %{REQUEST_FILENAME} !-d\n' +
+    'RewriteCond %{REQUEST_FILENAME}\.php -f\n' +
+    'RewriteRule ^(.*)$ $1.php\n'
+
+  return file('.htaccess', fileContent, { src: true })
+  .pipe(gulp.dest(targetFolder))
 })
 
 
