@@ -1,5 +1,4 @@
 - Readme más completo
-- Mejorar gitignore
 - Sourcemaps?
 
 - ENV VARS en lugar de JSON / Levantar variables de entorno y disponibilizarlas para usar en JS y CSS
