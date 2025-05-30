@@ -19,6 +19,7 @@ import plumber from 'gulp-plumber'
 import rename from 'gulp-rename'
 import replace from 'gulp-replace'
 import terser from 'gulp-terser'
+import sourcemaps from 'gulp-sourcemaps'
 import fs from 'fs'
 import { promises as fsPromises } from 'fs'
 
@@ -91,9 +92,11 @@ gulp.task('main:styles', function () {
     return gulp
       .src(paths.src.styles)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(compileSass().on('error', compileSass.logError))
       .pipe(concat('styles.css'))
       .pipe(rename('styles.min.css'))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.dev.styles))
   }
 })
@@ -112,7 +115,9 @@ gulp.task('main:scripts', function () {
     return gulp
       .src(paths.src.scripts)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(concat('scripts.min.js'))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.dev.scripts))
   }
 })
