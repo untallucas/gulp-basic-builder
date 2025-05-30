@@ -1,5 +1,11 @@
-- Readme más completo
 - ENV VARS en lugar de JSON / Levantar variables de entorno y disponibilizarlas para usar en JS y CSS
+
+- Ver que las tareas q estan en Readme sean las reales
+- prod o dist???
+- revisar la estructura del proyecto... assets/ sirve o la vuelo?
+- JS y CSS a scripts y styles
+- sharp hace falta???
+- Reaisar Readme
 
 - Tasks separadas x archivos
 - Comentar y verificar el gulpfile
@@ -12,6 +18,8 @@
   - clean
   - reset
   - restart
+
+
 
 - Como funciona con multiples HTMLs y rutas?
 - Ver que esta haciendo con los favicons > Ver lib de 11ty > El manifest x afuera / Revisar q los favicons se esten generando bien con fondo y crops
