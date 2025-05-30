@@ -1,3 +1,12 @@
+# LOGS
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
 # DEPENDENCIES
 /node_modules
 /.pnp
@@ -11,14 +20,30 @@
 /dist
 /dev
 /public
+/prod
+*.local
+
+# EDITOR
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # MISC
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
+# ENVIRONMENT
+.env.local
+.env.prod
+.env.dev
+.env.test
+
+# LOGS
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
