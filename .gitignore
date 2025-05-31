@@ -17,7 +17,6 @@ lerna-debug.log*
 
 # PRODUCTION
 /build
-/dist
 /dev
 /public
 /prod

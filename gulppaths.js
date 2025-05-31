@@ -23,15 +23,15 @@ const paths = {
     icons: 'dev'
   },
 
-  dist: {
-    base: 'dist',
-    markup: 'dist',
-    scripts: 'dist/js',
-    styles: 'dist/css',
-    fonts: 'dist/fonts',
-    images: 'dist/images',
-    docs: 'dist/docs',
-    icons: 'dist'
+  prod: {
+    base: 'prod',
+    markup: 'prod',
+    scripts: 'prod/js',
+    styles: 'prod/css',
+    fonts: 'prod/fonts',
+    images: 'prod/images',
+    docs: 'prod/docs',
+    icons: 'prod'
   }
 }
 

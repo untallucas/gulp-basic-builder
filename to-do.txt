@@ -1,7 +1,6 @@
 - ENV VARS en lugar de JSON / Levantar variables de entorno y disponibilizarlas para usar en JS y CSS
 
 - Ver que las tareas q estan en Readme sean las reales
-- prod o dist???
 - revisar la estructura del proyecto... assets/ sirve o la vuelo?
 - JS y CSS a scripts y styles
 - sharp hace falta???

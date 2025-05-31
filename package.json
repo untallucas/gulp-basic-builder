@@ -15,9 +15,11 @@
   ],
   "scripts": {
     "code": "gulp default",
-    "build": "cross-env NODE_ENV=production gulp default",
+    "dev": "gulp default",
+    "build": "cross-env NODE_ENV=prod gulp default",
+    "prod": "cross-env NODE_ENV=prod gulp default",
     "restart": "gulp restart",
-    "reset": "rm -rf node_modules dev dist yarn.lock && yarn cache clean"
+    "reset": "rm -rf node_modules dev prod yarn.lock && yarn cache clean"
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",

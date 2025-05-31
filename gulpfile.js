@@ -43,19 +43,19 @@ import cssnano from 'cssnano'
 
 
 // GET ENVIRONMENT FLAG
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'prod'
 
 
 // CLEAN WORK FOLDER
 gulp.task('main:clean', async function () {
-  var targetFolder = isProduction ? paths.dist.base : paths.dev.base
+  var targetFolder = isProduction ? paths.prod.base : paths.dev.base
   return fs.promises.rm(targetFolder, { recursive: true, force: true })
 })
 
 
 // MARKUP
 gulp.task('main:markup', function () {
-  var targetFolder = isProduction ? paths.dist.base : paths.dev.base
+  var targetFolder = isProduction ? paths.prod.base : paths.dev.base
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
@@ -87,7 +87,7 @@ gulp.task('main:styles', function () {
         cssnano()
       ]))
       .pipe(rename('styles.min.css'))
-      .pipe(gulp.dest(paths.dist.styles))
+      .pipe(gulp.dest(paths.prod.styles))
   } else {
     return gulp
       .src(paths.src.styles)
@@ -110,7 +110,7 @@ gulp.task('main:scripts', function () {
       .pipe(plumber())
       .pipe(terser())
       .pipe(concat('scripts.min.js'))
-      .pipe(gulp.dest(paths.dist.scripts))
+      .pipe(gulp.dest(paths.prod.scripts))
   } else {
     return gulp
       .src(paths.src.scripts)
@@ -170,7 +170,7 @@ gulp.task('main:images', function () {
   const srcImages = paths.src.images.replace(/\/\*\*\/\*\.\{.*\}$/, '')
 
   if (isProduction) {
-    const targetFolder = paths.dist.images
+    const targetFolder = paths.prod.images
     return optimizeAndCopyImages(srcImages, targetFolder)
   } else {
     const targetFolder = paths.dev.images
@@ -184,20 +184,13 @@ gulp.task('main:social', function () {
   return gulp
     .src(paths.src.social)
     .pipe(plumber())
-    .pipe(gulp.dest(paths.dist.base))
-})
-
-gulp.task('test:social', function () {
-  return gulp
-    .src('./src/assets/social/**/*.{jpg,jpeg,png}', { allowEmpty: true })
-    .pipe(plumber())
-    .pipe(gulp.dest('./dist/assets/social/'))
+    .pipe(gulp.dest(paths.prod.base))
 })
 
 
 // FONTS
 gulp.task('main:fonts', function () {
-  var targetFolder = isProduction ? paths.dist.fonts : paths.dev.fonts
+  var targetFolder = isProduction ? paths.prod.fonts : paths.dev.fonts
   return gulp
     .src(paths.src.fonts)
     .pipe(plumber())
@@ -207,7 +200,7 @@ gulp.task('main:fonts', function () {
 
 // DOCS
 gulp.task('main:docs', function () {
-  var targetFolder = isProduction ? paths.dist.docs : paths.dev.docs
+  var targetFolder = isProduction ? paths.prod.docs : paths.dev.docs
   return gulp
     .src(paths.src.docs)
     .pipe(plumber())
@@ -217,7 +210,7 @@ gulp.task('main:docs', function () {
 
 // HTACCESS
 gulp.task('main:htaccess', function () {
-  var targetFolder = isProduction ? paths.dist.base : paths.dev.base
+  var targetFolder = isProduction ? paths.prod.base : paths.dev.base
   var fileContent =
     '# TURN ON URL REWRITING\n' +
     'RewriteEngine On\n' +
@@ -236,7 +229,7 @@ gulp.task('main:htaccess', function () {
 gulp.task('create:robotsTxt', function () {
   var fileContent = 'User-agent: *\nAllow: /'
   return file('robots.txt', fileContent, { src: true })
-    .pipe(gulp.dest(paths.dist.base))
+    .pipe(gulp.dest(paths.prod.base))
 })
 
 gulp.task('create:humansTxt', function () {
@@ -250,12 +243,12 @@ gulp.task('create:humansTxt', function () {
     'Last update: ' + currentDate + '\n' +
     'Language: ' + config.appLanguage
   return file('humans.txt', fileContent, { src: true })
-    .pipe(gulp.dest(paths.dist.base))
+    .pipe(gulp.dest(paths.prod.base))
 })
 
 gulp.task('create:readmeMd', function () {
   var currentDate = new Date()
-  var fileContent =
+  var fileContentNOT =
     '# ' + config.appName + '  ' + '\n' +
     '## ' + config.appDescription + '  ' + '\n' +
     '&nbsp;  ' + '\n' +
@@ -269,7 +262,7 @@ gulp.task('create:readmeMd', function () {
     'Language: ' + config.appLanguage
 
 
-  const readme = `
+  const fileContent = `
     # ###process.env.APP_TITLE}
     ## ###process.env.APP_DESCRIPTION}
     &nbsp;
@@ -372,7 +365,7 @@ gulp.task('create:readmeMd', function () {
         any-file.html            # HTML pages
     `;
   return file('readme.md', fileContent, { src: true })
-    .pipe(gulp.dest(paths.dist.base))
+    .pipe(gulp.dest(paths.prod.base))
 })
 
 gulp.task('main:createFiles', gulp.series('create:robotsTxt', 'create:humansTxt', 'create:readmeMd'))
@@ -393,7 +386,7 @@ gulp.task('icons:png', async function () {
       .png({ compressionLevel: 9 })
       .toBuffer()
 
-    const outputPath = path.join(paths.dist.base, `${filename}.png`)
+    const outputPath = path.join(paths.prod.base, `${filename}.png`)
     fs.writeFileSync(outputPath, buffer)
   }))
 })
@@ -401,7 +394,7 @@ gulp.task('icons:png', async function () {
 gulp.task('icons:ico', async function () {
   const sizes = [16, 24, 32, 64, 128, 256]
   const inputPath = path.join(paths.src.icons, 'favicon.png')
-  const outputPath = path.join(paths.dist.base, 'favicon.ico')
+  const outputPath = path.join(paths.prod.base, 'favicon.ico')
 
   const tmpPngs = await Promise.all(
     sizes.map(size =>
@@ -439,7 +432,7 @@ gulp.task('icons:svg', function () {
         }
       })
     )
-    .pipe(gulp.dest(paths.dist.base))
+    .pipe(gulp.dest(paths.prod.base))
 })
 
 gulp.task('icons:manifest', function () {
@@ -448,7 +441,7 @@ gulp.task('icons:manifest', function () {
     .pipe(plumber())
     .pipe(replace('##appName##', config.appName))
     .pipe(replace('##appColor##', config.appColor))
-    .pipe(gulp.dest(paths.dist.base))
+    .pipe(gulp.dest(paths.prod.base))
 })
 
 gulp.task('main:favicons', gulp.series('icons:png', 'icons:ico', 'icons:svg', 'icons:manifest'))
@@ -456,7 +449,7 @@ gulp.task('main:favicons', gulp.series('icons:png', 'icons:ico', 'icons:svg', 'i
 
 // RESTART
 gulp.task('restart', async function () {
-  const folders = [paths.dist.base, paths.dev.base]
+  const folders = [paths.prod.base, paths.dev.base]
 
   await Promise.all(
     folders.map(folder =>
