@@ -352,17 +352,16 @@ gulp.task('create:readmeMd', function () {
 
     ### 📂&nbsp;&nbsp;Project Structure
         src/
-        └── assets/              # Assets folder
-            ├── docs/            # Assorted static files
-            ├── fonts/           # Fonts files
-            ├── icons/           # Favicons base
-            ├── images/          # Images
-            ├── scripts/         # Frontend JS
-            ├── styles/          # SCSS
-            ├── _components/     # HTML partials
-            └── _templates/      # HTML layouts
-        └── tasks/               # Helper functions
-        any-file.html            # HTML pages
+          ├── docs/            # Assorted static files
+          ├── fonts/           # Fonts files
+          ├── icons/           # Favicons base
+          ├── images/          # Images
+          ├── scripts/         # Frontend JS
+          ├── styles/          # SCSS
+          ├── _components/     # HTML partials
+          └── _templates/      # HTML layouts
+        tasks/                 # Helper functions
+        any-file.html          # HTML pages
     `;
   return file('readme.md', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
