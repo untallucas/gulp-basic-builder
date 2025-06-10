@@ -328,7 +328,7 @@ const fileContent =
 &nbsp;
 
 ### 🛠️&nbsp;&nbsp;Key Dependencies
-- **Cross-env:** Environment variables management
+- **CrossEnv:** Environment variables management
 - **Gulp + Plugins:** Tasks manager
 - **BrowserSync:** Live server with reload
 - **Imagemin + Sharp + Plugins:** Image optimization
