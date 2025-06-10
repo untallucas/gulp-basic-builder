@@ -9,7 +9,6 @@
 // MODULES IMPORT
 import gulp from 'gulp'
 import paths from './gulppaths.js'
-import config from './appconfig.js'
 
 import browserSync from 'browser-sync'
 import chalk from 'chalk'
@@ -41,6 +40,9 @@ import postcss from 'gulp-postcss'
 import autoprefixer from 'autoprefixer'
 import cssnano from 'cssnano'
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 // GET ENVIRONMENT FLAG
 const isProduction = process.env.NODE_ENV === 'prod'
@@ -59,15 +61,15 @@ gulp.task('main:markup', function () {
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
-    .pipe(replace('##appName##', config.appName))
-    .pipe(replace('##appKeywords##', config.appKeywords + ',' + config.appKeywords.toUpperCase()))
-    .pipe(replace('##appDescription##', config.appDescription))
-    .pipe(replace('##appColor##', config.appColor))
-    .pipe(replace('##appTwitter##', config.appTwitter))
-    .pipe(replace('##appUrl##', config.appUrl))
-    .pipe(replace('##appAuthor##', config.appAuthor))
-    .pipe(replace('##appAuthorTwitter##', config.appAuthorTwitter))
-    .pipe(replace('##appAnalyticsId##', config.appAnalyticsId))
+    .pipe(replace('##appName##', process.env.APP_NAME))
+    .pipe(replace('##appKeywords##', process.env.APP_KEYWORDS + ',' + process.env.APP_KEYWORDS.toUpperCase()))
+    .pipe(replace('##appDescription##', process.env.APP_DESCRIPTION))
+    .pipe(replace('##appColor##', process.env.APP_COLOR))
+    .pipe(replace('##appTwitter##', process.env.APP_TWITTER))
+    .pipe(replace('##appUrl##', process.env.APP_URL))
+    .pipe(replace('##appAuthor##', process.env.APP_AUTHOR))
+    .pipe(replace('##appAuthorTwitter##', process.env.APP_AUTHOR_TWITTER))
+    .pipe(replace('##appAnalyticsId##', process.env.APP_ANALYTICS_ID))
     .pipe(gulp.dest(targetFolder))
 })
 
@@ -235,48 +237,40 @@ gulp.task('create:robotsTxt', function () {
 gulp.task('create:humansTxt', function () {
   var currentDate = new Date()
   var fileContent =
-    '/* TEAM */' + '\n' +
-    'Developer: ' + config.appAuthor + '\n' +
-    'Twitter: ' + config.appAuthorTwitter + '\n' +
-    'From: ' + config.appAuthorLocation + '\n\n' +
-    '/* SITE */' + '\n' +
-    'Last update: ' + currentDate + '\n' +
-    'Language: ' + config.appLanguage
+    '/* TEAM */' +
+    '\n' +
+    'Developer: ' + process.env.APP_AUTHOR +
+    '\n' +
+    'Twitter: ' + process.env.APP_AUTHOR_TWITTER + process.env.APP_ANALYTICS_ID +
+    '\n' +
+    'From: ' + process.env.APP_AUTHOR_LOCATION +
+    '&nbsp;' + '\n' +
+    '/* SITE */' +
+    '\n' +
+    'Last update: ' + currentDate +
+    '\n' +
+    'Language: ' + process.env.APP_LANGUAGE
   return file('humans.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
 })
 
 gulp.task('create:readmeMd', function () {
   var currentDate = new Date()
-  var fileContentNOT =
-    '# ' + config.appName + '  ' + '\n' +
-    '## ' + config.appDescription + '  ' + '\n' +
-    '&nbsp;  ' + '\n' +
-    '### TEAM  ' + '\n' +
-    'Developer: ' + config.appAuthor + '  ' + '\n' +
-    'Twitter: ' + config.appAuthorTwitter + '  ' + '\n' +
-    'From: ' + config.appAuthorLocation + '  ' + '\n' +
-    '&nbsp;  ' + '\n' +
-    '### SITE  ' + '\n' +
-    'Last update: ' + currentDate + '  ' + '\n' +
-    'Language: ' + config.appLanguage
-
-
   const fileContent = `
-    # ###process.env.APP_TITLE}
-    ## ###process.env.APP_DESCRIPTION}
+    # ${process.env.APP_TITLE}
+    ## ${process.env.APP_DESCRIPTION}
     &nbsp;
 
     ### 🧑‍💻&nbsp;&nbsp;Author
-    **Developer:** ###process.env.APP_AUTHOR}
-    **Twitter/X:** https://x.com/###process.env.APP_AUTHOR_TWITTER}
-    **Email:** ###process.env.APP_AUTHOR_EMAIL}
-    **Location:** ###process.env.APP_AUTHOR_LOCATION}
+    **Developer:** ${process.env.APP_AUTHOR}
+    **Twitter/X:** https://x.com/${process.env.APP_AUTHOR_TWITTER}
+    **Email:** ${process.env.APP_AUTHOR_EMAIL}
+    **Location:** ${process.env.APP_AUTHOR_LOCATION}
     &nbsp;
 
     ### 💻&nbsp;&nbsp;Site Information
-    **Last update:** ###new Date().toDateString()}
-    **Language:** ###process.env.APP_LANGUAGE}
+    **Last update:** ${new Date().toDateString()}
+    **Language:** ${process.env.APP_LANGUAGE}
     **License:** MIT
     &nbsp;
 
@@ -438,8 +432,8 @@ gulp.task('icons:manifest', function () {
   return gulp
     .src(paths.src.icons + 'manifest.json')
     .pipe(plumber())
-    .pipe(replace('##appName##', config.appName))
-    .pipe(replace('##appColor##', config.appColor))
+    .pipe(replace('##appName##', process.env.APP_NAME))
+    .pipe(replace('##appColor##', process.env.APP_COLOR))
     .pipe(gulp.dest(paths.prod.base))
 })
 
