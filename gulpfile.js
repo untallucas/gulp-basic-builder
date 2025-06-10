@@ -1,9 +1,9 @@
 // TO EXECUTE
 // yarn install
-// yarn install:clean
 // yarn code
 // yarn build
 // yarn restart
+// yarn reset
 
 
 // MODULES IMPORT
@@ -241,10 +241,10 @@ gulp.task('create:humansTxt', function () {
     '\n' +
     'Developer: ' + process.env.APP_AUTHOR +
     '\n' +
-    'Twitter: ' + process.env.APP_AUTHOR_TWITTER + process.env.APP_ANALYTICS_ID +
+    'Twitter: ' + process.env.APP_AUTHOR_TWITTER +
     '\n' +
     'From: ' + process.env.APP_AUTHOR_LOCATION +
-    '&nbsp;' + '\n' +
+    '\n\n' +
     '/* SITE */' +
     '\n' +
     'Last update: ' + currentDate +
@@ -255,108 +255,103 @@ gulp.task('create:humansTxt', function () {
 })
 
 gulp.task('create:readmeMd', function () {
-  var currentDate = new Date()
-  const fileContent = `
-    # ${process.env.APP_TITLE}
-    ## ${process.env.APP_DESCRIPTION}
-    &nbsp;
+const fileContent =
+`
+# ${process.env.APP_TITLE}
+## ${process.env.APP_DESCRIPTION}
+&nbsp;
 
-    ### 🧑‍💻&nbsp;&nbsp;Author
-    **Developer:** ${process.env.APP_AUTHOR}
-    **Twitter/X:** https://x.com/${process.env.APP_AUTHOR_TWITTER}
-    **Email:** ${process.env.APP_AUTHOR_EMAIL}
-    **Location:** ${process.env.APP_AUTHOR_LOCATION}
-    &nbsp;
+### 🧑‍💻&nbsp;&nbsp;Author
+**Developer:** ${process.env.APP_AUTHOR}  
+**Twitter/X:** https://x.com/${process.env.APP_AUTHOR_TWITTER}  
+**Email:** ${process.env.APP_AUTHOR_EMAIL}  
+**Location:** ${process.env.APP_AUTHOR_LOCATION}  
+&nbsp;
 
-    ### 💻&nbsp;&nbsp;Site Information
-    **Last update:** ${new Date().toDateString()}
-    **Language:** ${process.env.APP_LANGUAGE}
-    **License:** MIT
-    &nbsp;
+### 💻&nbsp;&nbsp;Site Information
+**Last update:** ${new Date().toDateString()}  
+**Language:** ${process.env.APP_LANGUAGE}  
+**License:** MIT  
+&nbsp;
 
-    ### 🚀&nbsp;&nbsp;Builder Features
-    - Modular structure for build tasks
-    - Automatic watch of styles, scripts, and images
-    - Development mode with live server
-    - Production mode with image optimization, icon processing, and meta files generation
-    - Smart build cleanup
-    - Minification of HTML, CSS, and JS
-    &nbsp;
+### 🚀&nbsp;&nbsp;Builder Features
+- Modular structure for build tasks
+- Automatic watch of styles, scripts, and images
+- Development mode with live server
+- Production mode with image optimization, icon processing, and meta files generation
+- Smart build cleanup
+- Minification of HTML, CSS, and JS
+&nbsp;
 
-    ### 📦&nbsp;&nbsp;Install
-        yarn install
-    &nbsp;
+### 📦&nbsp;&nbsp;Install
+    yarn install
+- Install packages and dependencies
+&nbsp;  
+&nbsp;  
 
-    ### 🚦&nbsp;&nbsp;Start
-        yarn start
-    - Builds styles, scripts, and images
-    &nbsp;
+### 👨‍💻&nbsp;&nbsp;Development Mode
+    yarn dev
+    yarn code
+- Cleans the **dev/** folder
+- Compiles styles and scripts
+- Copies markup files
+- Copies assets files (images, fonts, and docs)
+- Generates sourcemaps for styles and scripts
+- Starts the development server
+- Actives watcher for files changes
+&nbsp;  
+&nbsp;  
 
-    ### 👨‍💻&nbsp;&nbsp;Development Mode
-        yarn dev
-        yarn code
-    - Cleans the **dev/** folder
-    - Compiles styles and scripts
-    - Copies markup files
-    - Copies assets files (images, fonts, and docs)
-    - Generates sourcemaps for styles and scripts
-    - Starts the development server
-    - Actives watcher for files changes
-    &nbsp;
+### 🏗️&nbsp;&nbsp;Production Build
+    yarn build
+    yarn prod
+- Cleans the **prod/** folder
+- Compiles and minifies styles and scripts
+- Minifies markup files
+- Optimizes images while preserving format
+- Copies static files (fonts, docs, etc.)
+- Copies social share assets
+- Generates site icons
+- Generates meta files
+&nbsp;  
+&nbsp;  
 
-    ### 🏗️&nbsp;&nbsp;Production Build
-        yarn build
-        yarn prod
-    - Cleans the **prod/** folder
-    - Compiles and minifies styles and scripts
-    - Minifies markup files
-    - Optimizes images while preserving format
-    - Copies static files (fonts, docs, etc.)
-    - Copies social share assets
-    - Generates site icons
-    - Generates meta files
-    &nbsp;
+### 🧼&nbsp;&nbsp;Cleanup Scripts
+    yarn restart
+- Deletes the **dev/** and **prod/** folders
+<!-- end of the list -->
+&nbsp;
 
-    ### 🧼&nbsp;&nbsp;Cleanup Scripts
-        yarn dev:clean
-    - Deletes the **dev/** folder
-    <!-- end of the list -->
-    &nbsp;
+    yarn reset
+- Deletes everything (dev, prod, node_modules, .cache, yarn.lock) and cleans cache
+<!-- end of the list -->
+&nbsp;
 
-        yarn prod:clean
-    - Deletes the **prod/** folder
-    <!-- end of the list -->
-    &nbsp;
+### 🛠️&nbsp;&nbsp;Key Dependencies
+- **Cross-env:** Environment variables management
+- **Gulp + Plugins:** Tasks manager
+- **BrowserSync:** Live server with reload
+- **Imagemin + Sharp + Plugins:** Image optimization
+- **SASS + Postcss:** For SCSS styles manegement
+- **Favicons:** For generating multiple icons from a single image
+- **PNG-to-ICO:** Converts PNG images to ICO format
+- **Through2:** Stream utility for transforming files
+&nbsp;  
+&nbsp;  
 
-        yarn reset
-    - Deletes everything (dev, prod, node_modules, .cache, yarn.lock) + cleans cache
-    <!-- end of the list -->
-    &nbsp;
-
-    ### 🛠️&nbsp;&nbsp;Key Dependencies
-    - **Cross-env:** Environment variables management
-    - **Gulp + Plugins:** Tasks manager
-    - **BrowserSync:** Live server with reload
-    - **Imagemin + Sharp + Plugins:** Image optimization
-    - **SASS + Postcss:** For SCSS styles manegement
-    - **Favicons:** For generating multiple icons from a single image
-    - **PNG-to-ICO:** Converts PNG images to ICO format
-    - **Through2:** Stream utility for transforming files
-    &nbsp;
-
-    ### 📂&nbsp;&nbsp;Project Structure
-        src/
-          ├── docs/            # Assorted static files
-          ├── fonts/           # Fonts files
-          ├── icons/           # Favicons base
-          ├── images/          # Images
-          ├── scripts/         # Frontend JS
-          ├── styles/          # SCSS
-          ├── _components/     # HTML partials
-          └── _templates/      # HTML layouts
-        tasks/                 # Helper functions
-        any-file.html          # HTML pages
-    `;
+### 📂&nbsp;&nbsp;Project Structure
+    src/
+      ├── docs/            # Assorted static files
+      ├── fonts/           # Fonts files
+      ├── icons/           # Favicons base
+      ├── images/          # Images
+      ├── scripts/         # Frontend Javascript
+      ├── styles/          # SCSS styles
+      ├── _components/     # HTML partials
+      └── _templates/      # HTML layouts
+    tasks/                 # Helper functions
+    index.html             # HTML pages
+`;
   return file('readme.md', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
 })
@@ -438,18 +433,6 @@ gulp.task('icons:manifest', function () {
 })
 
 gulp.task('main:favicons', gulp.series('icons:png', 'icons:ico', 'icons:svg', 'icons:manifest'))
-
-
-// RESTART
-gulp.task('restart', async function () {
-  const folders = [paths.prod.base, paths.dev.base]
-
-  await Promise.all(
-    folders.map(folder =>
-      fs.promises.rm(folder, { recursive: true, force: true })
-    )
-  )
-})
 
 
 // RELOAD WEB SERVER

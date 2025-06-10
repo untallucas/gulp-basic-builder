@@ -18,7 +18,7 @@
     "dev": "gulp default",
     "build": "cross-env NODE_ENV=prod gulp default",
     "prod": "cross-env NODE_ENV=prod gulp default",
-    "restart": "gulp restart",
+    "restart": "rm -rf dev prod",
     "reset": "rm -rf node_modules dev prod yarn.lock && yarn cache clean"
   },
   "dependencies": {

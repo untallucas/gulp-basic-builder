@@ -1,25 +1,10 @@
-1️⃣ VARIABLES
-- ENV VARS en lugar de JSON / Levantar variables de entorno y disponibilizarlas para usar en JS y CSS
-
-2️⃣ README
-- Ver que las tareas q estan en Readme sean las reales
-- Revisar Readme
-
 3️⃣ GULPFILE
 - Comentar y verificar el gulpfile
 - Tasks separadas x archivos
 - Informar x consola lo que va pasando > ver 11ty
 
 4️⃣ PACKAGE
-- Scripts
-  - install
-  - start
-  - dev / code
-  - build / prod
-  - clean
-  - reset
-  - restart
-- sharp hace falta???
+- Sharp hace falta???
 
 5️⃣ FAVICONS
 - Ver que esta haciendo con los favicons > Ver lib de 11ty > El manifest x afuera / Revisar q los favicons se esten generando bien con fondo y crops
