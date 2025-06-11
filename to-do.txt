@@ -1,6 +1,6 @@
 3️⃣ GULPFILE
-- Comentar y verificar el gulpfile
 - Informar x consola lo que va pasando > ver 11ty
+- Remover la task de report y llevar a cada una
 
 4️⃣ PACKAGE
 - Sharp hace falta???
