@@ -1,9 +1,10 @@
 import gulp from 'gulp'
-import paths from './gulppaths.js'
-
+import file from 'gulp-file'
 import sharp from 'sharp'
 import pngToIco from 'png-to-ico'
 import { optimize } from 'svgo'
+
+import paths from '../gulppaths.js'
 
 gulp.task('icons:png', async function () {
   const iconVariants = [
@@ -69,20 +70,23 @@ gulp.task('icons:svg', function () {
 })
 
 gulp.task('icons:manifest', function () {
-  return gulp
-    .src(paths.src.icons + 'manifest.json')
-    .pipe(plumber())
-    .pipe(replace('##appName##', process.env.APP_NAME))
-    .pipe(replace('##appColor##', process.env.APP_COLOR))
-    .pipe(gulp.dest(paths.prod.base))
+  var targetFolder = paths.prod.base
+  var fileContent =
+    '# MANIFEST\n' +
+    '# MANIFEST\n' +
+    '# MANIFEST\n' +
+    '# MANIFEST\n'
+  return file('manifest.json', fileContent, { src: true })
+  .pipe(gulp.dest(targetFolder))
 })
+
 
 gulp.task(
   'createFavicons', 
   gulp.series(
-    'icons:png', 
-    'icons:ico', 
-    'icons:svg', 
+    // 'icons:png', 
+    // 'icons:ico', 
+    // 'icons:svg', 
     'icons:manifest'
   )
 )

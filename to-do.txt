@@ -1,6 +1,5 @@
 3️⃣ GULPFILE
 - Comentar y verificar el gulpfile
-- Tasks separadas x archivos
 - Informar x consola lo que va pasando > ver 11ty
 
 4️⃣ PACKAGE
@@ -8,6 +7,10 @@
 
 5️⃣ FAVICONS
 - Ver que esta haciendo con los favicons > Ver lib de 11ty > El manifest x afuera / Revisar q los favicons se esten generando bien con fondo y crops
+- Toda esta task revisar
+
+5️⃣ SOCIAL ASSETS
+- Optimizar y copiar
 
 6️⃣ REPLACEMENTS ENGINE
 - Ver como funciona el poder reemplazar valores x variables seteadas en el entorno global / Tener templates/componentes HTML reutilizables dentro de otros archivos / Ver untallucas

@@ -1,5 +1,6 @@
 import gulp from 'gulp'
 import file from 'gulp-file'
+
 import paths from '../gulppaths.js'
 
 import dotenv from 'dotenv'
@@ -58,7 +59,8 @@ const fileContent =
 - Production mode with image optimization, icon processing, and meta files generation
 - Smart build cleanup
 - Minification of HTML, CSS, and JS
-&nbsp;
+&nbsp;  
+&nbsp;  
 
 ### 📦&nbsp;&nbsp;Install
     yarn install
@@ -68,7 +70,6 @@ const fileContent =
 
 ### 👨‍💻&nbsp;&nbsp;Development Mode
     yarn dev
-    yarn code
 - Cleans the **dev/** folder
 - Compiles styles and scripts
 - Copies markup files
@@ -80,7 +81,6 @@ const fileContent =
 &nbsp;  
 
 ### 🏗️&nbsp;&nbsp;Production Build
-    yarn build
     yarn prod
 - Cleans the **prod/** folder
 - Compiles and minifies styles and scripts

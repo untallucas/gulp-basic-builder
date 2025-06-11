@@ -1,5 +1,6 @@
 import gulp from 'gulp'
 import plumber from 'gulp-plumber'
+
 import paths from '../gulppaths.js'
 
 gulp.task('processSocial', function () {

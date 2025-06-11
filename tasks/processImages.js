@@ -1,3 +1,4 @@
+import gulp from 'gulp'
 import { promises as fsPromises } from 'fs'
 import path from 'path'
 import imagemin from 'imagemin'
@@ -5,6 +6,7 @@ import pngquant from 'imagemin-pngquant'
 import mozjpeg from 'imagemin-mozjpeg'
 import gifsicle from 'imagemin-gifsicle'
 import svgo from 'imagemin-svgo'
+
 import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
