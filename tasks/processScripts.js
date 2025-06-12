@@ -1,8 +1,8 @@
 import gulp from 'gulp'
-import plumber from 'gulp-plumber'
 import concat from 'gulp-concat'
-import terser from 'gulp-terser'
+import plumber from 'gulp-plumber'
 import sourcemaps from 'gulp-sourcemaps'
+import terser from 'gulp-terser'
 
 import paths from '../gulppaths.js'
 

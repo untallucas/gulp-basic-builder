@@ -6,12 +6,16 @@ import paths from '../gulppaths.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
+
+// GENERATE ROBOTS.TXT
 gulp.task('create:robotsTxt', function () {
   var fileContent = 'User-agent: *\nAllow: /'
   return file('robots.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
 })
 
+
+// GENERATE HUMANS.TXT
 gulp.task('create:humansTxt', function () {
   var currentDate = new Date()
   var fileContent =
@@ -32,6 +36,8 @@ gulp.task('create:humansTxt', function () {
     .pipe(gulp.dest(paths.prod.base))
 })
 
+
+// GENERATE README.MD
 gulp.task('create:readmeMd', function () {
 const fileContent =
 `
@@ -133,6 +139,8 @@ const fileContent =
     .pipe(gulp.dest(paths.prod.base))
 })
 
+
+// BUILDER
 gulp.task(
   'generateMetaFiles', 
   gulp.series(

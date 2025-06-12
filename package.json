@@ -22,6 +22,7 @@
     "reset": "rm -rf node_modules dev prod yarn.lock && yarn cache clean"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "autoprefixer": "^10.4.21",
     "browser-sync": "^3.0.4",
     "chalk": "^5.4.1",
@@ -46,9 +47,6 @@
     "imagemin-svgo": "^11.0.1",
     "png-to-ico": "^2.1.8",
     "postcss": "^8.5.3",
-    "sass": "^1.69.5",
-    "sharp": "^0.34.1",
-    "svgo": "^3.3.2",
-    "through2": "^4.0.2"
+    "sass": "^1.69.5"
   }
 }

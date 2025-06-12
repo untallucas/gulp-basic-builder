@@ -1,16 +1,18 @@
 import gulp from 'gulp'
 import { promises as fsPromises } from 'fs'
-import path from 'path'
-import imagemin from 'imagemin'
-import pngquant from 'imagemin-pngquant'
-import mozjpeg from 'imagemin-mozjpeg'
 import gifsicle from 'imagemin-gifsicle'
+import imagemin from 'imagemin'
+import mozjpeg from 'imagemin-mozjpeg'
+import path from 'path'
+import pngquant from 'imagemin-pngquant'
 import svgo from 'imagemin-svgo'
 
 import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 
+
+// COPY IMAGES WITHOUT CHANGES
 async function copyImages(srcDir, destDir) {
   const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
 
@@ -28,6 +30,8 @@ async function copyImages(srcDir, destDir) {
   }
 }
 
+
+// OPTIMIZE AND COPY IMAGES
 async function optimizeAndCopyImages(srcDir, destDir) {
   const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
   await fsPromises.mkdir(destDir, { recursive: true })
@@ -53,14 +57,14 @@ async function optimizeAndCopyImages(srcDir, destDir) {
   }
 }
 
-gulp.task('processImages', function () {
-  const srcImages = paths.src.images.replace(/\/\*\*\/\*\.\{.*\}$/, '')
 
+// BUILDER
+gulp.task('processImages', function () {
   if (isProduction) {
     const targetFolder = paths.prod.images
-    return optimizeAndCopyImages(srcImages, targetFolder)
+    return optimizeAndCopyImages(paths.src.images, targetFolder)
   } else {
     const targetFolder = paths.dev.images
-    return copyImages(srcImages, targetFolder)
+    return copyImages(paths.src.images, targetFolder)
   }
 })

@@ -5,8 +5,8 @@ const paths = {
     scripts: 'src/scripts/**/*.js',
     styles: 'src/styles/**/*.scss',
     fonts: 'src/fonts/**/*.{otf,ttf,svg,eot,woff,woff2}',
-    images: 'src/images/**/*.{jpg,png,gif,jpeg,webp,svg}',
-    social: 'src/social/**/*.{jpg,png,jpeg,webp}',
+    images: 'src/images/',
+    social: 'src/social/',
     docs: 'src/docs/**/*.{pdf,xls,xlsx,doc,docx}',
     icons: 'src/icons/'
   },
@@ -18,8 +18,7 @@ const paths = {
     styles: 'dev/styles',
     fonts: 'dev/fonts',
     images: 'dev/images',
-    docs: 'dev/docs',
-    icons: 'dev'
+    docs: 'dev/docs'
   },
 
   prod: {
@@ -29,8 +28,7 @@ const paths = {
     styles: 'prod/styles',
     fonts: 'prod/fonts',
     images: 'prod/images',
-    docs: 'prod/docs',
-    icons: 'prod'
+    docs: 'prod/docs'
   }
 }
 
