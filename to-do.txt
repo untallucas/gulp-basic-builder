@@ -12,5 +12,8 @@
 4️⃣ README
 - Revisar readme con ultimos cambios
 
-8️⃣ PRODUCT PACKAGING
+5️⃣ ENV VARS
+- Los env estan cargando unificados??
+
+6️⃣ PRODUCT PACKAGING
 - Armar assets del producto > Favicon, Social, etc.
