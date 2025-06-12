@@ -2,9 +2,9 @@ import gulp from 'gulp'
 
 import './tasks/copyDocs.js'
 import './tasks/copyFonts.js'
-import './tasks/createFavicons.js'
-import './tasks/createFiles.js'
-import './tasks/createHtaccess.js'
+import './tasks/generateIcons.js'
+import './tasks/generateMetaFiles.js'
+import './tasks/generateHtaccess.js'
 import './tasks/processImages.js'
 import './tasks/processMarkup.js'
 import './tasks/processScripts.js'
@@ -30,7 +30,7 @@ const dev = gulp.series(
     'processScripts',
     'processStyles',
     'processImages',
-    'createHtaccess',
+    'generateHtaccess',
     'copyFonts',
     'copyDocs',
   ),
@@ -47,9 +47,9 @@ const prod = gulp.series(
     'processStyles',
     'processImages',
     'processSocial',
-    'createHtaccess',
-    'createFavicons',
-    'createFiles',
+    'generateHtaccess',
+    'generateIcons',
+    'generateMetaFiles',
     'copyFonts',
     'copyDocs',
   ),

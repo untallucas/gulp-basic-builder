@@ -82,7 +82,7 @@ gulp.task('icons:manifest', function () {
 
 
 gulp.task(
-  'createFavicons', 
+  'generateIcons', 
   gulp.series(
     // 'icons:png', 
     // 'icons:ico', 

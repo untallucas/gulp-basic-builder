@@ -134,7 +134,7 @@ const fileContent =
 })
 
 gulp.task(
-  'createFiles', 
+  'generateMetaFiles', 
   gulp.series(
     'create:robotsTxt', 
     'create:humansTxt', 
