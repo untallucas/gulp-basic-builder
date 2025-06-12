@@ -1,13 +1,16 @@
-3️⃣ GULPFILE
+1️⃣ GULPFILE
 - Informar x consola lo que va pasando > ver 11ty
 - Remover la task de report y llevar a cada una
 
-6️⃣ REPLACEMENTS ENGINE
+2️⃣ REPLACEMENTS ENGINE
 - Ver como funciona el poder reemplazar valores x variables seteadas en el entorno global / Tener templates/componentes HTML reutilizables dentro de otros archivos / Ver untallucas
 - Folders de components y layouts?
 
-7️⃣ STYLES
+3️⃣ STYLES
 - Agregar los tokens de CSS builder / Separar tokens en core y semantic
+
+4️⃣ README
+- Revisar readme con ultimos cambios
 
 8️⃣ PRODUCT PACKAGING
 - Armar assets del producto > Favicon, Social, etc.
