@@ -1,4 +1,5 @@
 import gulp from 'gulp'
+import fileInclude from 'gulp-file-include'
 import plumber from 'gulp-plumber'
 import replace from 'gulp-replace'
 
@@ -20,5 +21,9 @@ export function processMarkup() {
     .pipe(replace('##appAuthor##', process.env.APP_AUTHOR))
     .pipe(replace('##appAuthorTwitter##', process.env.APP_AUTHOR_TWITTER))
     .pipe(replace('##appAnalyticsId##', process.env.APP_ANALYTICS_ID))
+    .pipe(fileInclude({
+      prefix: '@@',
+      basepath: paths.src.partials,
+    }))
     .pipe(gulp.dest(targetFolder))
 }

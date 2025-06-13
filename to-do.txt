@@ -1,10 +1,7 @@
+
 1️⃣ GULPFILE
 - Loguear x consola lo que va pasando en cada file
 - console.log("✅ SCSS styles compiled in " + outputDir + "/main.css");
-
-2️⃣ REPLACEMENTS ENGINE
-- Ver como funciona el poder reemplazar valores x variables seteadas en el entorno global / Tener templates/componentes HTML reutilizables dentro de otros archivos / Ver untallucas
-- Folders de components y layouts?
 
 3️⃣ STYLES
 - Agregar los tokens de CSS builder / Separar tokens en core y semantic
