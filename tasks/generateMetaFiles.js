@@ -3,7 +3,7 @@ import file from 'gulp-file'
 
 import paths from '../gulppaths.js'
 
-import dotenv from 'dotenv'
+import dotenv from 'dotenv-flow'
 dotenv.config()
 
 

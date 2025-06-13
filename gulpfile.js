@@ -16,7 +16,7 @@ import { report } from './tasks/report.js'
 import { serve } from './tasks/serve.js'
 import { watch } from './tasks/watch.js'
 
-import dotenv from 'dotenv'
+import dotenv from 'dotenv-flow'
 dotenv.config()
 
 // GET ENVIRONMENT FLAG

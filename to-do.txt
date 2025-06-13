@@ -1,4 +1,3 @@
-
 1️⃣ GULPFILE
 - Loguear x consola lo que va pasando en cada file
 - console.log("✅ SCSS styles compiled in " + outputDir + "/main.css");
@@ -8,9 +7,6 @@
 
 4️⃣ README
 - Revisar readme con ultimos cambios
-
-5️⃣ ENV VARS
-- Los env estan cargando unificados??
 
 6️⃣ PRODUCT PACKAGING
 - Armar assets del producto > Favicon, Social, etc.

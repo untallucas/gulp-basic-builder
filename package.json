@@ -16,8 +16,8 @@
   "scripts": {
     "code": "gulp default",
     "dev": "gulp default",
-    "build": "cross-env NODE_ENV=prod gulp default",
-    "prod": "cross-env NODE_ENV=prod gulp default",
+    "build": "NODE_ENV=prod gulp default",
+    "prod": "NODE_ENV=prod gulp default",
     "restart": "rm -rf dev prod",
     "reset": "rm -rf node_modules dev prod yarn.lock && yarn cache clean"
   },
@@ -26,9 +26,8 @@
     "autoprefixer": "^10.4.21",
     "browser-sync": "^3.0.4",
     "chalk": "^5.4.1",
-    "cross-env": "^7.0.3",
     "cssnano": "^7.0.7",
-    "dotenv": "^16.5.0",
+    "dotenv-flow": "^4.1.0",
     "gulp": "^5.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-file": "^0.4.0",
