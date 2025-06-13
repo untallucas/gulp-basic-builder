@@ -8,7 +8,7 @@ import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 
-gulp.task('processScripts', function () {
+export function processScripts() {
   if (isProduction) {
     return gulp
       .src(paths.src.scripts)
@@ -25,4 +25,4 @@ gulp.task('processScripts', function () {
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.dev.scripts))
   }
-})
+}

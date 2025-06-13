@@ -1,7 +1,7 @@
 import gulp from 'gulp'
 import chalk from 'chalk'
 
-gulp.task('report', function (done) {
+export function report(done) {
   console.log(
     chalk.green.bold(
       '\n' +
@@ -29,4 +29,4 @@ gulp.task('report', function (done) {
     )
   )
   done()
-})
+}

@@ -6,7 +6,7 @@ import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 
-gulp.task('processMarkup', function () {
+export function processMarkup() {
   var targetFolder = isProduction ? paths.prod.base : paths.dev.base
   return gulp
     .src(paths.src.markup)
@@ -21,4 +21,4 @@ gulp.task('processMarkup', function () {
     .pipe(replace('##appAuthorTwitter##', process.env.APP_AUTHOR_TWITTER))
     .pipe(replace('##appAnalyticsId##', process.env.APP_ANALYTICS_ID))
     .pipe(gulp.dest(targetFolder))
-})
+}

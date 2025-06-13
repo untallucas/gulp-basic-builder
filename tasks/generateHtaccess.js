@@ -5,7 +5,7 @@ import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 
-gulp.task('generateHtaccess', function () {
+export function generateHtaccess() {
   var targetFolder = isProduction ? paths.prod.base : paths.dev.base
   var fileContent =
     '# TURN ON URL REWRITING\n' +
@@ -18,4 +18,4 @@ gulp.task('generateHtaccess', function () {
 
   return file('.htaccess', fileContent, { src: true })
   .pipe(gulp.dest(targetFolder))
-})
+}

@@ -47,13 +47,13 @@ async function renderSvgToPngVariants() {
   }
 }
 
-gulp.task('icons:png', function () {
+function iconsPNG() {
   return renderSvgToPngVariants()
-})
+}
 
 
 // GENERATE ICO ICON
-gulp.task('icons:ico', async function () {
+async function iconsICO() {
   const inputPath = path.join(paths.src.icons, 'favicon.svg')
   const svgBuffer = await fsPromises.readFile(inputPath)
   const sizes = [ 16, 24, 32, 64, 128, 256 ]
@@ -71,7 +71,7 @@ gulp.task('icons:ico', async function () {
   const icoBuffer = await pngToIco(pngBuffers)
   await fsPromises.mkdir(paths.prod.base, { recursive: true })
   await fsPromises.writeFile(outputPath, icoBuffer)
-})
+}
 
 
 // COPY AND OPTIMIZE SVG ICON
@@ -89,13 +89,13 @@ async function optimizeAndCopySvgIcon() {
   await fsPromises.writeFile(path.join(paths.prod.base, '/favicon.svg'), optimized)
 }
 
-gulp.task('icons:svg', function () {
+function iconsSVG() {
   return optimizeAndCopySvgIcon()
-})
+}
 
 
 // GENERATE MANIFEST.JSON
-gulp.task('icons:manifest', function () {
+function iconsManifest() {
   var fileContent = {
     name: process.env.APP_TITLE,
     short_name: process.env.APP_SHORTTITLE,
@@ -119,11 +119,11 @@ gulp.task('icons:manifest', function () {
 
   return file('manifest.json', JSON.stringify(fileContent, null, 2), { src: true })
     .pipe(gulp.dest(paths.prod.base))
-})
+}
 
 
 // GENERATE MANIFEST.WEBMANIFEST
-gulp.task('icons:webmanifest', function () {
+function iconsWebmanifest() {
   var fileContent = {
     name: process.env.APP_TITLE,
     short_name: process.env.APP_SHORTTITLE,
@@ -152,17 +152,15 @@ gulp.task('icons:webmanifest', function () {
 
   return file('manifest.webmanifest', JSON.stringify(fileContent, null, 2), { src: true })
     .pipe(gulp.dest(paths.prod.base))
-})
+}
 
 
 // BUILDER
-gulp.task(
-  'generateIcons', 
+export const generateIcons = 
   gulp.series(
-    'icons:png',
-    'icons:ico',
-    'icons:svg',
-    'icons:manifest',
-    'icons:webmanifest'
+    iconsPNG,
+    iconsICO,
+    iconsSVG,
+    iconsManifest,
+    iconsWebmanifest
   )
-)

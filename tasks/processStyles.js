@@ -14,7 +14,7 @@ import paths from '../gulppaths.js'
 const isProduction = process.env.NODE_ENV === 'prod'
 const compileSass = gulpSass(sass)
 
-gulp.task('processStyles', function () {
+export function processStyles() {
   if (isProduction) {
     return gulp
       .src(paths.src.styles)
@@ -38,4 +38,4 @@ gulp.task('processStyles', function () {
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.dev.styles))
   }
-})
+}

@@ -59,7 +59,7 @@ async function optimizeAndCopyImages(srcDir, destDir) {
 
 
 // BUILDER
-gulp.task('processImages', function () {
+export function processImages() {
   if (isProduction) {
     const targetFolder = paths.prod.images
     return optimizeAndCopyImages(paths.src.images, targetFolder)
@@ -67,4 +67,4 @@ gulp.task('processImages', function () {
     const targetFolder = paths.dev.images
     return copyImages(paths.src.images, targetFolder)
   }
-})
+}

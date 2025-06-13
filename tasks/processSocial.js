@@ -6,7 +6,7 @@ import path from 'path'
 
 import paths from '../gulppaths.js'
 
-gulp.task('processSocial', async function () {
+export async function processSocial() {
   const srcDir = paths.src.social
   const destDir = paths.prod.base
 
@@ -27,4 +27,4 @@ gulp.task('processSocial', async function () {
 
     await fsPromises.writeFile(destPath, optimized)
   }
-})
+}

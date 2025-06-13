@@ -8,15 +8,15 @@ dotenv.config()
 
 
 // GENERATE ROBOTS.TXT
-gulp.task('create:robotsTxt', function () {
+function createRobotsTxt() {
   var fileContent = 'User-agent: *\nAllow: /'
   return file('robots.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
-})
+}
 
 
 // GENERATE HUMANS.TXT
-gulp.task('create:humansTxt', function () {
+function createHumansTxt() {
   var currentDate = new Date()
   var fileContent =
     '/* TEAM */' +
@@ -34,11 +34,11 @@ gulp.task('create:humansTxt', function () {
     'Language: ' + process.env.APP_LANGUAGE
   return file('humans.txt', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
-})
+}
 
 
 // GENERATE README.MD
-gulp.task('create:readmeMd', function () {
+function createReadmeMd() {
 const fileContent =
 `
 # ${process.env.APP_TITLE}
@@ -137,15 +137,13 @@ const fileContent =
 `;
   return file('readme.md', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))
-})
+}
 
 
 // BUILDER
-gulp.task(
-  'generateMetaFiles', 
+export const generateMetaFiles = 
   gulp.series(
-    'create:robotsTxt', 
-    'create:humansTxt', 
-    'create:readmeMd'
+    createRobotsTxt, 
+    createHumansTxt, 
+    createReadmeMd
   )
-)

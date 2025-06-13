@@ -1,7 +1,7 @@
 import gulp from 'gulp'
 import browserSync from 'browser-sync'
 
-gulp.task('reload', function (done) {
+export function reload(done) {
   browserSync.reload()
   done()
-})
+}
