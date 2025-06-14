@@ -3,6 +3,7 @@ import autoprefixer from 'autoprefixer'
 import concat from 'gulp-concat'
 import cssnano from 'cssnano'
 import gulpSass from 'gulp-sass'
+import path from 'path'
 import plumber from 'gulp-plumber'
 import postcss from 'gulp-postcss'
 import rename from 'gulp-rename'
@@ -17,7 +18,7 @@ const compileSass = gulpSass(sass)
 export function processStyles() {
   if (isProduction) {
     return gulp
-      .src(paths.src.styles)
+      .src(path.join(paths.src.styles, 'styles.prod.scss'))
       .pipe(plumber())
       .pipe(compileSass({ outputStyle: 'compressed' }).on('error', compileSass.logError))
       .pipe(concat('styles.css'))
@@ -29,7 +30,7 @@ export function processStyles() {
       .pipe(gulp.dest(paths.prod.styles))
   } else {
     return gulp
-      .src(paths.src.styles)
+      .src(path.join(paths.src.styles, 'styles.dev.scss'))
       .pipe(plumber())
       .pipe(sourcemaps.init())
       .pipe(compileSass().on('error', compileSass.logError))

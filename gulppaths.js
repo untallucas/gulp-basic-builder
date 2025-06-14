@@ -4,7 +4,7 @@ const paths = {
     markup: 'src/*.{html,htm,php,md}',
     partials: 'src/partials/',
     scripts: 'src/scripts/**/*.js',
-    styles: 'src/styles/**/*.scss',
+    styles: 'src/styles/',
     fonts: 'src/fonts/**/*.{otf,ttf,svg,eot,woff,woff2}',
     images: 'src/images/',
     social: 'src/social/',

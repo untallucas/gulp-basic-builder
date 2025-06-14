@@ -1,0 +1,26 @@
+@use './vars' as *;
+
+body {
+  border: 2px dashed red !important;
+}
+
+* {
+  outline: 1px $color-support-error-text;
+}
+
+body::before {
+  content: '🟡 Modo DEV';
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: lightyellow;
+  color: black;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  z-index: 9999;
+}
+
+.grid-debug {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px);
+  background-size: 100px 100%;
+}

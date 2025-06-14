@@ -1,0 +1,246 @@
+// Font Family
+$font-title: 'Saira', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+$font-text: 'Inter', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+$font-accent: 'Saira', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+$font-code: 'IBM Plex Mono', 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+
+
+// Font Weight
+$font-weight-thin: 100;
+$font-weight-extralight: 200;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+$font-weight-black: 900;
+
+
+// Font Size
+$font-size-core: 8px;
+$font-size-1: $font-size-core * 1.25;   // 10
+$font-size-2: $font-size-core * 1.50;   // 12
+$font-size-3: $font-size-core * 1.75;   // 14
+$font-size-4: $font-size-core * 2.00;   // 16
+$font-size-5: $font-size-core * 2.25;   // 18
+$font-size-6: $font-size-core * 2.75;   // 22
+$font-size-7: $font-size-core * 3.25;   // 26
+$font-size-8: $font-size-core * 3.75;   // 30
+$font-size-9: $font-size-core * 4.50;   // 36
+
+
+// Line Height
+$line-height-1: $font-size-core * 1.25 * 1.25;
+$line-height-2: $font-size-core * 1.50 * 1.25;
+$line-height-3: $font-size-core * 1.75 * 1.25;
+$line-height-4: $font-size-core * 2.00 * 1.25;
+$line-height-5: $font-size-core * 2.25 * 1.25;
+$line-height-6: $font-size-core * 2.75 * 1.05;
+$line-height-7: $font-size-core * 3.25 * 1.05;
+$line-height-8: $font-size-core * 4.00 * 1.00;
+$line-height-9: $font-size-core * 5.00 * 1.00;
+
+
+// Letter Space
+$letter-space-tight: -1px;
+$letter-space-close: -0.5px;
+$letter-space-normal: 0;
+$letter-space-cozy: 0.5px;
+$letter-space-loose: 1px;
+
+
+// Spacing
+$spacing-core: 8px;
+$spacing-1: $spacing-core * 0.25;       // 2
+$spacing-2: $spacing-core * 0.50;       // 4
+$spacing-3: $spacing-core * 1.00;       // 8
+$spacing-4: $spacing-core * 1.50;       // 12
+$spacing-5: $spacing-core * 2.00;       // 16
+$spacing-6: $spacing-core * 2.50;       // 20
+$spacing-7: $spacing-core * 3.00;       // 24
+$spacing-8: $spacing-core * 4.00;       // 32
+$spacing-9: $spacing-core * 5.00;       // 40
+
+
+// Border Width
+$border-width-core: 2px;
+$border-width-hairline: $border-width-core * 0.50;
+$border-width-narrow: $border-width-core * 1.00;
+$border-width-thick: $border-width-core * 2.00;
+
+
+// Border Radii
+$border-radius-core: 4px;
+$border-radius-subtle: $border-radius-core * 0.50;
+$border-radius-normal: $border-radius-core * 1.00;
+$border-radius-rounded: $border-radius-core * 2.00;
+$border-radius-pill: 100px;
+$border-radius-circle: 50%;
+
+
+// Icon Size
+$icon-core: 8px;
+$icon-1: $icon-core * 1.00;             // 8
+$icon-2: $icon-core * 1.50;             // 12
+$icon-3: $icon-core * 2.00;             // 16
+$icon-4: $icon-core * 2.50;             // 20
+$icon-5: $icon-core * 3.00;             // 24
+$icon-6: $icon-core * 4.00;             // 32
+$icon-7: $icon-core * 5.00;             // 40
+$icon-8: $icon-core * 6.00;             // 48
+$icon-9: $icon-core * 7.50;             // 60
+
+
+// Transition Speed
+$transition-core: 300ms;
+$transition-fast: $transition-core * 0.50;
+$transition-normal: $transition-core * 1.00;
+$transition-slow: $transition-core * 2.00;
+
+
+// Responsive Breakpoints
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1500px;
+$xs-min-width: $breakpoint-xs;
+$xs-max-width: $breakpoint-sm - 1;
+$sm-min-width: $breakpoint-sm;
+$sm-max-width: $breakpoint-md - 1;
+$md-min-width: $breakpoint-md;
+$md-max-width: $breakpoint-lg - 1;
+$lg-min-width: $breakpoint-lg;
+$lg-max-width: $breakpoint-xl - 1;
+$xl-min-width: $breakpoint-xl;
+$xl-max-width: $breakpoint-xxl - 1;
+$xxl-min-width: $breakpoint-xxl;
+$xxl-max-width: auto;
+
+
+// Support Colors
+$color-support-error-1: hsl(0deg,100%,10%);
+$color-support-error-2: hsl(0deg,100%,20%);
+$color-support-error-3: hsl(0deg,100%,30%);
+$color-support-error-4: hsl(0deg,100%,40%);
+$color-support-error-5: hsl(0deg,100%,50%);
+$color-support-error-6: hsl(0deg,100%,60%);
+$color-support-error-7: hsl(0deg,100%,70%);
+$color-support-error-8: hsl(0deg,100%,80%);
+$color-support-error-9: hsl(0deg,100%,90%);
+
+$color-support-info-1: hsl(230deg,100%,10%);
+$color-support-info-2: hsl(230deg,100%,20%);
+$color-support-info-3: hsl(230deg,100%,30%);
+$color-support-info-4: hsl(230deg,100%,40%);
+$color-support-info-5: hsl(230deg,100%,50%);
+$color-support-info-6: hsl(230deg,100%,60%);
+$color-support-info-7: hsl(230deg,100%,70%);
+$color-support-info-8: hsl(230deg,100%,80%);
+$color-support-info-9: hsl(230deg,100%,90%);
+
+$color-support-success-1: hsl(120deg,100%,10%);
+$color-support-success-2: hsl(120deg,100%,20%);
+$color-support-success-3: hsl(120deg,100%,30%);
+$color-support-success-4: hsl(120deg,100%,40%);
+$color-support-success-5: hsl(120deg,100%,50%);
+$color-support-success-6: hsl(120deg,100%,60%);
+$color-support-success-7: hsl(120deg,100%,70%);
+$color-support-success-8: hsl(120deg,100%,80%);
+$color-support-success-9: hsl(120deg,100%,90%);
+
+$color-support-warning-1: hsl(40deg,100%,10%);
+$color-support-warning-2: hsl(40deg,100%,20%);
+$color-support-warning-3: hsl(40deg,100%,30%);
+$color-support-warning-4: hsl(40deg,100%,40%);
+$color-support-warning-5: hsl(40deg,100%,50%);
+$color-support-warning-6: hsl(40deg,100%,60%);
+$color-support-warning-7: hsl(40deg,100%,70%);
+$color-support-warning-8: hsl(40deg,100%,80%);
+$color-support-warning-9: hsl(40deg,100%,90%);
+
+
+// Support Colors Alias
+$color-support-error-base: $color-support-error-5;
+$color-support-error-background: $color-support-error-8;
+$color-support-error-text: $color-support-error-3;
+
+$color-support-info-base: $color-support-info-5;
+$color-support-info-background: $color-support-info-8;
+$color-support-info-text: $color-support-info-3;
+
+$color-support-success-base: $color-support-success-5;
+$color-support-success-background: $color-support-success-8;
+$color-support-success-text: $color-support-success-3;
+
+$color-support-warning-base: $color-support-warning-5;
+$color-support-warning-background: $color-support-warning-8;
+$color-support-warning-text: $color-support-warning-3;
+
+
+// Neutral Colors
+$color-neutral-1: hsl(220deg,5%,95%);
+$color-neutral-2: hsl(220deg,5%,87%);
+$color-neutral-3: hsl(220deg,5%,71%);
+$color-neutral-4: hsl(220deg,5%,57%);
+$color-neutral-5: hsl(220deg,5%,43%);
+$color-neutral-6: hsl(220deg,5%,38%);
+$color-neutral-7: hsl(220deg,5%,29%);
+$color-neutral-8: hsl(220deg,5%,21%);
+$color-neutral-9: hsl(220deg,5%,13%);
+$color-neutral-white: hsl(0deg,0%,100%);
+$color-neutral-black: hsl(0deg,0%,0%);
+
+
+// Primary Colors
+$color-primary-1: hsl(8deg,75%,95%);
+$color-primary-2: hsl(8deg,75%,90%);
+$color-primary-3: hsl(8deg,75%,78%);
+$color-primary-4: hsl(8deg,75%,64%);
+$color-primary-5: hsl(8deg,75%,54%);
+$color-primary-6: hsl(8deg,75%,44%);
+$color-primary-7: hsl(8deg,75%,34%);
+$color-primary-8: hsl(8deg,75%,24%);
+$color-primary-9: hsl(8deg,75%,14%);
+
+
+// Secondary Colors
+$color-secondary-1: hsl(225deg,91%,95%);
+$color-secondary-2: hsl(225deg,91%,88%);
+$color-secondary-3: hsl(225deg,91%,77%);
+$color-secondary-4: hsl(225deg,91%,66%);
+$color-secondary-5: hsl(225deg,91%,55%);
+$color-secondary-6: hsl(225deg,91%,48%);
+$color-secondary-7: hsl(225deg,91%,39%);
+$color-secondary-8: hsl(225deg,91%,29%);
+$color-secondary-9: hsl(225deg,91%,18%);
+
+
+// Color Alias
+$color-titles: $color-neutral-1;
+$color-text: $color-neutral-4;
+$color-legal: $color-neutral-7;
+$color-actions: $color-primary-5;
+$color-hover: $color-primary-4;
+
+
+// Elevation
+$elevation-ground: none;
+
+$elevation-low: 0 2px 3px rgba($color-neutral-9, 0.2);
+$elevation-medium: 0 4px 8px rgba($color-neutral-9, 0.3);
+$elevation-high: 0 12px 16px rgba($color-neutral-9, 0.4), 0 2px 6px rgba($color-neutral-9, 0.2);
+
+$elevation-low-inverted: 0 -2px 3px rgba($color-neutral-9, 0.2);
+$elevation-medium-inverted: 0 -4px 8px rgba($color-neutral-9, 0.3);
+$elevation-high-inverted: 0 -12px 16px rgba($color-neutral-9, 0.4), 0 -2px 6px rgba($color-neutral-9, 0.2);
+
+$elevation-low-primary: 0 2px 3px rgba($color-primary-5, 0.2);
+$elevation-medium-primary: 0 4px 8px rgba($color-primary-5, 0.3);
+$elevation-high-primary: 0 12px 16px rgba($color-primary-5, 0.4), 0 2px 6px rgba($color-primary-5, 0.2);
+
+$elevation-low-secondary: 0 2px 3px rgba($color-secondary-5, 0.2);
+$elevation-medium-secondary: 0 4px 8px rgba($color-secondary-5, 0.3);
+$elevation-high-secondary: 0 12px 16px rgba($color-secondary-5, 0.4), 0 2px 6px rgba($color-secondary-5, 0.2);

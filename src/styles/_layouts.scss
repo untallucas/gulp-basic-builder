@@ -1,0 +1,31 @@
+@use './vars' as *;
+
+body {
+  font-family: $font-text;
+  color: $color-primary-5;
+  margin: 0;
+  padding: $spacing-5;
+  background-image: url('../images/example.jpg');
+  background-size: 100px;
+  background-position: center;
+  background-repeat: repeat;
+
+  background-color: $color-primary-1;
+  color: $color-primary-5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.thing {
+  background-image: url('../images/vite.svg');
+  background-size: 100px;
+  background-position: center;
+  background-repeat: repeat;
+  display: block;
+  width: 500px;
+  height: 500px;
+}

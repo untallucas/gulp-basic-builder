@@ -1,0 +1,25 @@
+@use './vars' as *;
+
+body {
+  outline: none;
+}
+
+* {
+  outline: none;
+}
+
+body::before {
+  content: '🟢 Modo PROD';
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: lightgreen;
+  color: black;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  z-index: 9999;
+}
+
+.grid-debug {
+  background: none;
+}
