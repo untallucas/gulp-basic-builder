@@ -1,4 +1,3 @@
-import gulp from 'gulp'
 import chalk from 'chalk'
 
 export function report(done) {
@@ -9,16 +8,16 @@ export function report(done) {
       '\n' + '\n'
     ) +
     chalk.gray(
-      '✅ Markup files copied' + '\n' +
-      '✅ Styles minified and optimized' + '\n' +
-      '✅ Scripts compiled and minified' + '\n' +
-      '✅ Images copied and compressed' + '\n' +
-      '✅ Social share assets copied' + '\n' +
-      '✅ Font files copied' + '\n' +
-      '✅ Documents files copied' + '\n' +
-      '✅ Htaccess file created' + '\n' +
-      '✅ Favicons and identity assets created' + '\n' +
-      '✅ Humans, robots and other files created' + '\n'
+      '✅ Markup files processed and copied' + '\n' +
+      '✅ Javascript files compiled and minified' + '\n' +
+      '✅ CSS styles compiled and minified' + '\n' +
+      '✅ Images optimized and copied' + '\n' +
+      '✅ Social share assets optimized and copied' + '\n' +
+      '✅ .htaccess file created' + '\n' +
+      '✅ Browser and applications favicons created' + '\n' +
+      '✅ Text files (robots.txt, humans.txt, readme.md) created' + '\n' +
+      '✅ Fonts files copied' + '\n' +
+      '✅ Other documents files copied' + '\n'
     ) +
     chalk.green.bold(
       '\n' + '\n' +

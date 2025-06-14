@@ -1,12 +1,2 @@
-1️⃣ GULPFILE
-- Loguear x consola lo que va pasando en cada file
-- console.log("✅ SCSS styles compiled in " + outputDir + "/main.css");
-
-3️⃣ STYLES
-- Agregar los tokens de CSS builder / Separar tokens en core y semantic
-
-4️⃣ README
-- Revisar readme con ultimos cambios
-
 6️⃣ PRODUCT PACKAGING
 - Armar assets del producto > Favicon, Social, etc.

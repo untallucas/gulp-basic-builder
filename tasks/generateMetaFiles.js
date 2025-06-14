@@ -77,25 +77,25 @@ const fileContent =
 ### 👨‍💻&nbsp;&nbsp;Development Mode
     yarn dev
 - Cleans the **dev/** folder
+- Process markup files
 - Compiles styles and scripts
-- Copies markup files
 - Copies assets files (images, fonts, and docs)
 - Generates sourcemaps for styles and scripts
 - Starts the development server
-- Actives watcher for files changes
+- Watches for files changes
 &nbsp;  
 &nbsp;  
 
 ### 🏗️&nbsp;&nbsp;Production Build
     yarn prod
 - Cleans the **prod/** folder
+- Process and copy markup files
 - Compiles and minifies styles and scripts
-- Minifies markup files
 - Optimizes images while preserving format
+- Optimizes and copies files for social sharing
+- Generates .htaccess and text based meta files
+- Generates browser and applications favicons
 - Copies static files (fonts, docs, etc.)
-- Copies social share assets
-- Generates site icons
-- Generates meta files
 &nbsp;  
 &nbsp;  
 
@@ -111,29 +111,30 @@ const fileContent =
 &nbsp;
 
 ### 🛠️&nbsp;&nbsp;Key Dependencies
-- **CrossEnv:** Environment variables management
-- **Gulp + Plugins:** Tasks manager
+- **Dotenv Flow:** Environment variables management
+- **Gulp + Plugins:** Tasks manager and markup templates management
 - **BrowserSync:** Live server with reload
-- **Imagemin + Sharp + Plugins:** Image optimization
-- **SASS + Postcss:** For SCSS styles manegement
-- **Favicons:** For generating multiple icons from a single image
+- **Imagemin + Plugins:** Image optimization and transformation
+- **SASS + Postcss:** SCSS styles management
 - **PNG-to-ICO:** Converts PNG images to ICO format
-- **Through2:** Stream utility for transforming files
 &nbsp;  
 &nbsp;  
 
 ### 📂&nbsp;&nbsp;Project Structure
     src/
-      ├── docs/            # Assorted static files
-      ├── fonts/           # Fonts files
-      ├── icons/           # Favicons base
-      ├── images/          # Images
-      ├── scripts/         # Frontend Javascript
-      ├── styles/          # SCSS styles
-      ├── _components/     # HTML partials
-      └── _templates/      # HTML layouts
-    tasks/                 # Helper functions
-    index.html             # HTML pages
+    ├── _partials/    → Reusable HTML partials
+    ├── docs/         → Document files
+    ├── fonts/        → Font files
+    ├── icons/        → Base files for favicons
+    ├── images/       → Images to optimize
+    ├── scripts/      → Frontend JavaScript files
+    ├── social/       → Social share files
+    └── styles/       → SCSS stylesheets
+
+    tasks/            → Helper functions for Gulp
+
+    index.html        → HTML pages
+    page.php          → PHP pages
 `;
   return file('readme.md', fileContent, { src: true })
     .pipe(gulp.dest(paths.prod.base))

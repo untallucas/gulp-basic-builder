@@ -2,7 +2,7 @@ const paths = {
   src: {
     base: 'src',
     markup: 'src/*.{html,htm,php,md}',
-    partials: 'src/partials/',
+    partials: 'src/_partials/',
     scripts: 'src/scripts/**/*.js',
     styles: 'src/styles/',
     fonts: 'src/fonts/**/*.{otf,ttf,svg,eot,woff,woff2}',
