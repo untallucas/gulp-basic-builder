@@ -8,7 +8,6 @@ import plumber from 'gulp-plumber'
 import postcss from 'gulp-postcss'
 import rename from 'gulp-rename'
 import * as sass from 'sass'
-import sourcemaps from 'gulp-sourcemaps'
 
 import paths from '../gulppaths.js'
 
@@ -32,11 +31,9 @@ export function processStyles() {
     return gulp
       .src(path.join(paths.src.styles, 'styles.dev.scss'))
       .pipe(plumber())
-      .pipe(sourcemaps.init())
-      .pipe(compileSass().on('error', compileSass.logError))
+      .pipe(compileSass({ sourceMap: true, outputStyle: 'expanded' }).on('error', compileSass.logError))
       .pipe(concat('styles.css'))
       .pipe(rename('styles.min.css'))
-      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.dev.styles))
   }
 }
