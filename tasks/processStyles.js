@@ -31,7 +31,7 @@ export function processStyles() {
     return gulp
       .src(path.join(paths.src.styles, 'styles.dev.scss'))
       .pipe(plumber())
-      .pipe(compileSass({ sourceMap: true, outputStyle: 'expanded' }).on('error', compileSass.logError))
+      .pipe(compileSass({ outputStyle: 'expanded' }).on('error', compileSass.logError))
       .pipe(concat('styles.css'))
       .pipe(rename('styles.min.css'))
       .pipe(gulp.dest(paths.dev.styles))

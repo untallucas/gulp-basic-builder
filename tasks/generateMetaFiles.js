@@ -80,7 +80,6 @@ const fileContent =
 - Process markup files
 - Compiles styles and scripts
 - Copies assets files (images, fonts, and docs)
-- Generates sourcemaps for styles and scripts
 - Starts the development server
 - Watches for files changes
 &nbsp;  
@@ -114,7 +113,7 @@ const fileContent =
 - **Dotenv Flow:** Environment variables management
 - **Gulp + Plugins:** Tasks manager and markup templates management
 - **BrowserSync:** Live server with reload
-- **Imagemin + Plugins:** Image optimization and transformation
+- **Sharp:** Bitmap images optimization and transformation
 - **SASS + Postcss:** SCSS styles management
 - **PNG-to-ICO:** Converts PNG images to ICO format
 &nbsp;  

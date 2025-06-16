@@ -1,7 +1,6 @@
 import gulp from 'gulp'
 import concat from 'gulp-concat'
 import plumber from 'gulp-plumber'
-import sourcemaps from 'gulp-sourcemaps'
 import terser from 'gulp-terser'
 
 import paths from '../gulppaths.js'
@@ -20,9 +19,7 @@ export function processScripts() {
     return gulp
       .src(paths.src.scripts)
       .pipe(plumber())
-      .pipe(sourcemaps.init())
       .pipe(concat('scripts.min.js'))
-      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.dev.scripts))
   }
 }

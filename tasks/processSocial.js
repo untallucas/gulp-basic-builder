@@ -1,30 +1,24 @@
-import gulp from 'gulp'
-import { promises as fsPromises } from 'fs'
-import imagemin from 'imagemin'
-import mozjpeg from 'imagemin-mozjpeg'
+import { promises as fs } from 'fs'
 import path from 'path'
+import sharp from 'sharp';
 
 import paths from '../gulppaths.js'
 
 export async function processSocial() {
-  const srcDir = paths.src.social
-  const destDir = paths.prod.base
-
-  const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
-  await fsPromises.mkdir(destDir, { recursive: true })
+  const srcDir = paths.src.social;
+  const destDir = paths.prod.base;
+  const entries = await fs.readdir(srcDir, { withFileTypes: true });
 
   for (const entry of entries) {
-    const ext = path.extname(entry.name).toLowerCase()
-    if (!entry.isFile() || !(ext === '.jpg' || ext === '.jpeg')) continue
-
     const srcPath = path.join(srcDir, entry.name)
     const destPath = path.join(destDir, entry.name)
+    const ext = path.extname(entry.name).toLowerCase();
+    if (!entry.isFile() || !(ext === '.jpg' || ext === '.jpeg')) continue
 
-    const buffer = await fsPromises.readFile(srcPath)
-    const optimized = await imagemin.buffer(buffer, {
-      plugins: [mozjpeg()]
-    })
+    await fs.mkdir(path.dirname(destPath), { recursive: true });
 
-    await fsPromises.writeFile(destPath, optimized)
+    await sharp(srcPath)
+      .jpeg({ quality: 80, progressive: true })
+      .toFile(destPath);
   }
 }

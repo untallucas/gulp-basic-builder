@@ -1,70 +1,55 @@
-import gulp from 'gulp'
-import { promises as fsPromises } from 'fs'
-import gifsicle from 'imagemin-gifsicle'
-import imagemin from 'imagemin'
-import mozjpeg from 'imagemin-mozjpeg'
+import { promises as fs } from 'fs'
 import path from 'path'
-import pngquant from 'imagemin-pngquant'
-import svgo from 'imagemin-svgo'
+import sharp from 'sharp';
+import { optimize as svgoOptimize } from 'svgo';
 
 import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 
-
-// COPY IMAGES WITHOUT CHANGES
-async function copyImages(srcDir, destDir) {
-  const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
-
-  await fsPromises.mkdir(destDir, { recursive: true })
+export async function processImages() {
+  const srcDir = paths.src.images;
+  const destDir = isProduction ? paths.prod.images : paths.dev.images;
+  const entries = await fs.readdir(srcDir, { withFileTypes: true });
 
   for (const entry of entries) {
-    const srcPath = path.join(srcDir, entry.name)
-    const destPath = path.join(destDir, entry.name)
+    const srcPath = path.join(srcDir, entry.name);
+    const destPath = path.join(destDir, entry.name);
+    const ext = path.extname(entry.name).toLowerCase();
 
-    if (entry.isDirectory()) {
-      await copyImages(srcPath, destPath)
-    } else {
-      await fsPromises.copyFile(srcPath, destPath)
+    await fs.mkdir(path.dirname(destPath), { recursive: true });
+
+    // COPY IMAGES WITHOUT CHANGES IN DEV
+    if (!isProduction) {
+      await fs.copyFile(srcPath, destPath);
+      continue;
     }
-  }
-}
 
-
-// OPTIMIZE AND COPY IMAGES
-async function optimizeAndCopyImages(srcDir, destDir) {
-  const entries = await fsPromises.readdir(srcDir, { withFileTypes: true })
-  await fsPromises.mkdir(destDir, { recursive: true })
-
-  for (const entry of entries) {
-    const srcPath = path.join(srcDir, entry.name)
-    const destPath = path.join(destDir, entry.name)
-
-    if (entry.isDirectory()) {
-      await optimizeAndCopyImages(srcPath, destPath)
-    } else {
-      const buffer = await fsPromises.readFile(srcPath)
-      const optimized = await imagemin.buffer(buffer, {
-        plugins: [
-          mozjpeg(),
-          pngquant(),
-          gifsicle(),
-          svgo(),
-        ],
-      })
-      await fsPromises.writeFile(destPath, optimized)
+    // OPTIMIZE AND COPY IMAGES IN PROD
+    if (['.jpg', '.jpeg'].includes(ext)) {
+      await sharp(srcPath)
+        .jpeg({ quality: 80, progressive: true })
+        .toFile(destPath);
     }
-  }
-}
-
-
-// BUILDER
-export function processImages() {
-  if (isProduction) {
-    const targetFolder = paths.prod.images
-    return optimizeAndCopyImages(paths.src.images, targetFolder)
-  } else {
-    const targetFolder = paths.dev.images
-    return copyImages(paths.src.images, targetFolder)
+    else if (ext === '.png') {
+      await sharp(srcPath)
+        .png({ compressionLevel: 9 })
+        .toFile(destPath);
+    }
+    else if (ext === '.webp') {
+      await sharp(srcPath)
+        .webp({ quality: 80, lossless: true })
+        .toFile(destPath);
+    }
+    else if (ext === '.svg') {
+      const svgContent = await fs.readFile(srcPath, 'utf8');
+      const result = svgoOptimize(svgContent, {
+        multipass: true
+      });
+      await fs.writeFile(destPath, result.data, 'utf8');
+    }
+    else {
+      await fs.copyFile(srcPath, destPath);
+    }
   }
 }
