@@ -22,7 +22,6 @@
     "reset": "rm -rf node_modules dev prod yarn.lock && yarn cache clean"
   },
   "dependencies": {
-    "@resvg/resvg-js": "^2.6.2",
     "autoprefixer": "^10.4.21",
     "browser-sync": "^3.0.4",
     "chalk": "^5.4.1",

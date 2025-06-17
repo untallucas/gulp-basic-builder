@@ -3,7 +3,6 @@ import file from 'gulp-file'
 import { promises as fs } from 'fs'
 import path from 'path'
 import pngToIco from 'png-to-ico'
-import { Resvg } from '@resvg/resvg-js'
 import sharp from 'sharp'
 import { optimize as svgoOptimize } from 'svgo'
 
@@ -39,18 +38,17 @@ function iconsPNG() {
 
 // GENERATE ICO ICON
 async function iconsICO() {
-  const inputPath = path.join(paths.src.icons, 'favicon.svg')
-  const svgBuffer = await fs.readFile(inputPath)
+  const sourceFile = await fs.readFile(path.join(paths.src.icons, 'favicon.svg'))
   const sizes = [ 16, 24, 32, 64, 128, 256 ]
   const outputPath = path.join(paths.prod.base, 'favicon.ico')
 
   const pngBuffers = await Promise.all(
-    sizes.map(size => {
-      const resvg = new Resvg(svgBuffer, {
-        fitTo: { mode: 'width', value: size }
-      })
-      return resvg.render().asPng()
-    })
+    sizes.map(size =>
+      sharp(sourceFile)
+        .resize(size, size, { fit: 'contain' })
+        .png()
+        .toBuffer()
+    )
   )
 
   const icoBuffer = await pngToIco(pngBuffers)
