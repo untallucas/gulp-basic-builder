@@ -1,14 +1,11 @@
 import gulp from 'gulp'
 import file from 'gulp-file'
-import { promises as fsPromises } from 'fs'
-import gifsicle from 'imagemin-gifsicle'
-import imagemin from 'imagemin'
-import mozjpeg from 'imagemin-mozjpeg'
+import { promises as fs } from 'fs'
 import path from 'path'
-import pngquant from 'imagemin-pngquant'
 import pngToIco from 'png-to-ico'
 import { Resvg } from '@resvg/resvg-js'
-import svgo from 'imagemin-svgo'
+import sharp from 'sharp'
+import { optimize as svgoOptimize } from 'svgo'
 
 import paths from '../gulppaths.js'
 
@@ -16,7 +13,7 @@ import paths from '../gulppaths.js'
 // RESIZE ICON
 async function renderSvgToPngVariants() {
   const svgPath = path.join(paths.src.icons, 'favicon.svg')
-  const svgBuffer = await fsPromises.readFile(svgPath)
+  const svgBuffer = await fs.readFile(svgPath)
   const iconVariants = [
     { size: 64, filename: 'favicon' },
     { size: 180, filename: 'apple-touch-icon' },
@@ -24,26 +21,14 @@ async function renderSvgToPngVariants() {
     { size: 512, filename: 'icon-512' }
   ]
 
-  await fsPromises.mkdir(paths.prod.base, { recursive: true })
+  await fs.mkdir(paths.prod.base, { recursive: true })
 
   for (const { size, filename } of iconVariants) {
-    const resvg = new Resvg(svgBuffer, {
-      fitTo: {
-        mode: 'width',
-        value: size
-      }
-    })
-    const pngBuffer = resvg.render().asPng()
-    const optimized = await imagemin.buffer(pngBuffer, {
-      plugins: [
-        pngquant(), 
-        mozjpeg(), 
-        gifsicle(), 
-        svgo()
-      ],
-    })
     const outputPath = path.join(paths.prod.base, `${filename}.png`)
-    await fsPromises.writeFile(outputPath, optimized)
+    await sharp(svgBuffer)
+      .resize(size, size, { fit: 'contain' })
+      .png({ compressionLevel: 9, quality: 80 })
+      .toFile(outputPath)
   }
 }
 
@@ -55,7 +40,7 @@ function iconsPNG() {
 // GENERATE ICO ICON
 async function iconsICO() {
   const inputPath = path.join(paths.src.icons, 'favicon.svg')
-  const svgBuffer = await fsPromises.readFile(inputPath)
+  const svgBuffer = await fs.readFile(inputPath)
   const sizes = [ 16, 24, 32, 64, 128, 256 ]
   const outputPath = path.join(paths.prod.base, 'favicon.ico')
 
@@ -69,24 +54,19 @@ async function iconsICO() {
   )
 
   const icoBuffer = await pngToIco(pngBuffers)
-  await fsPromises.mkdir(paths.prod.base, { recursive: true })
-  await fsPromises.writeFile(outputPath, icoBuffer)
+  await fs.mkdir(paths.prod.base, { recursive: true })
+  await fs.writeFile(outputPath, icoBuffer)
 }
 
 
 // COPY AND OPTIMIZE SVG ICON
 async function optimizeAndCopySvgIcon() {
-  await fsPromises.mkdir(paths.prod.base, { recursive: true })
-  const sourceFile = await fsPromises.readFile(path.join(paths.src.icons, '/favicon.svg'))
-  const optimized = await imagemin.buffer(sourceFile, {
-    plugins: [
-      mozjpeg(),
-      pngquant(),
-      gifsicle(),
-      svgo(),
-    ],
-  })
-  await fsPromises.writeFile(path.join(paths.prod.base, '/favicon.svg'), optimized)
+  await fs.mkdir(paths.prod.base, { recursive: true })
+  const sourceFile = await fs.readFile(path.join(paths.src.icons, 'favicon.svg'), 'utf-8')
+  const optimized = svgoOptimize(sourceFile, {
+    multipass: true
+  });
+  await fs.writeFile(path.join(paths.prod.base, 'favicon.svg'), optimized.data, 'utf-8');
 }
 
 function iconsSVG() {
