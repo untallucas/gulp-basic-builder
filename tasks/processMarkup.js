@@ -12,7 +12,7 @@ export function processMarkup() {
   return gulp
     .src(paths.src.markup)
     .pipe(plumber())
-    .pipe(replace('##appName##', process.env.APP_NAME))
+    .pipe(replace('##appName##', process.env.APP_TITLE))
     .pipe(replace('##appKeywords##', process.env.APP_KEYWORDS + ',' + process.env.APP_KEYWORDS.toUpperCase()))
     .pipe(replace('##appDescription##', process.env.APP_DESCRIPTION))
     .pipe(replace('##appColor##', process.env.APP_COLOR))

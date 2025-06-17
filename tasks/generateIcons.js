@@ -39,14 +39,18 @@ function iconsPNG() {
 // GENERATE ICO ICON
 async function iconsICO() {
   const sourceFile = await fs.readFile(path.join(paths.src.icons, 'favicon.svg'))
-  const sizes = [ 16, 24, 32, 64, 128, 256 ]
+  const sizes = [ 16, 24, 32, 64, 128 ]
   const outputPath = path.join(paths.prod.base, 'favicon.ico')
 
   const pngBuffers = await Promise.all(
     sizes.map(size =>
       sharp(sourceFile)
         .resize(size, size, { fit: 'contain' })
-        .png()
+        .png({
+          compressionLevel: 9,
+          quality: 80,
+          palette: true
+        })
         .toBuffer()
     )
   )
