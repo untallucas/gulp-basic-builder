@@ -141,9 +141,8 @@ const fileContent =
 
 
 // BUILDER
-export const generateMetaFiles = 
-  gulp.series(
-    createRobotsTxt, 
-    createHumansTxt, 
-    createReadmeMd
-  )
+export async function generateMetaFiles(){
+  await createRobotsTxt(), 
+  await createHumansTxt(), 
+  await createReadmeMd()
+} 

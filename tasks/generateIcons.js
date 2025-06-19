@@ -138,11 +138,10 @@ function iconsWebmanifest() {
 
 
 // BUILDER
-export const generateIcons = 
-  gulp.series(
-    iconsPNG,
-    iconsICO,
-    iconsSVG,
-    iconsManifest,
-    iconsWebmanifest
-  )
+export async function generateIcons(){
+  await iconsPNG(),
+  await iconsICO(),
+  await iconsSVG(),
+  await iconsManifest(),
+  await iconsWebmanifest()
+}
