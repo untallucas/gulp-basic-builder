@@ -40,18 +40,16 @@ const dev = gulp.series(
 // TASK CONSTRUCTORS - PRODUCTION
 const prod = gulp.series(
   clean,
-  gulp.parallel(
-    processMarkup,
-    processScripts,
-    processStyles,
-    processImages,
-    processSocial,
-    generateHtaccess,
-    generateIcons,
-    generateMetaFiles,
-    copyFonts,
-    copyDocs,
-  ),
+  processMarkup,
+  processScripts,
+  processStyles,
+  processImages,
+  processSocial,
+  generateHtaccess,
+  generateIcons,
+  generateMetaFiles,
+  copyFonts,
+  copyDocs,
   report
 )
 

@@ -1,11 +1,13 @@
-import gulp from 'gulp'
 import fs from 'fs'
+import { withLogs } from './report_new.js'
 
 import paths from '../gulppaths.js'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 
-export async function clean() {
+export function clean() {
   var targetFolder = isProduction ? paths.prod.base : paths.dev.base
-  return fs.promises.rm(targetFolder, { recursive: true, force: true })
+  return withLogs('clean', 
+    fs.promises.rm(targetFolder, { recursive: true, force: true })
+  )
 }

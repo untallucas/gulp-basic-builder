@@ -1,5 +1,6 @@
 import gulp from 'gulp'
 import file from 'gulp-file'
+import { withLogs } from './report_new.js'
 
 import paths from '../gulppaths.js'
 
@@ -10,8 +11,11 @@ dotenv.config()
 // GENERATE ROBOTS.TXT
 function createRobotsTxt() {
   var fileContent = 'User-agent: *\nAllow: /'
-  return file('robots.txt', fileContent, { src: true })
-    .pipe(gulp.dest(paths.prod.base))
+
+  return withLogs('genrerateRobotsTxt',
+    file('robots.txt', fileContent, { src: true })
+      .pipe(gulp.dest(paths.prod.base))
+  )
 }
 
 
@@ -32,8 +36,11 @@ function createHumansTxt() {
     'Last update: ' + currentDate +
     '\n' +
     'Language: ' + process.env.APP_LANGUAGE
-  return file('humans.txt', fileContent, { src: true })
-    .pipe(gulp.dest(paths.prod.base))
+
+  return withLogs('genrerateHumansTxt',
+    file('humans.txt', fileContent, { src: true })
+      .pipe(gulp.dest(paths.prod.base))
+  )
 }
 
 
@@ -135,8 +142,10 @@ const fileContent =
     index.html        → HTML pages
     page.php          → PHP pages
 `;
-  return file('readme.md', fileContent, { src: true })
-    .pipe(gulp.dest(paths.prod.base))
+  return withLogs('generateReadmeMd',
+    file('readme.md', fileContent, { src: true })
+      .pipe(gulp.dest(paths.prod.base))
+  )
 }
 
 

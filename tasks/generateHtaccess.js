@@ -1,5 +1,6 @@
 import gulp from 'gulp'
 import file from 'gulp-file'
+import { withLogs } from './report_new.js'
 
 import paths from '../gulppaths.js'
 
@@ -16,6 +17,8 @@ export function generateHtaccess() {
     'RewriteCond %{REQUEST_FILENAME}\.php -f\n' +
     'RewriteRule ^(.*)$ $1.php\n'
 
-  return file('.htaccess', fileContent, { src: true })
-  .pipe(gulp.dest(targetFolder))
+  return withLogs('genrerateHtaccess',
+    file('.htaccess', fileContent, { src: true })
+      .pipe(gulp.dest(targetFolder))
+  )
 }

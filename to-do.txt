@@ -1,2 +1,11 @@
-1️⃣ PRODUCT PACKAGING
+➡️ PRODUCT PACKAGING
 - Armar assets del producto > Favicon, Social, etc.
+
+➡️ REPORT
+- Textos para cada task
+- Acomodar el orden
+- Eliminar report nativo de Gulp
+- Eliminar el report viejo
+
+➡️ PARALELL
+- Ver bien que hacer con el paralell/series del gulpfile
